@@ -5,6 +5,8 @@
 
 GXDE on COPR当前由[@CharOfString](https://github.com/CharOfString)维护。
 
+Evernight Vista 由怪力熊玩Fedora全球社区[@EvernightFedora](https://github.com/EvernightFedora) [@evernightvista](https://github.com/evernightvista)维护。
+
 ## 更新COPR包
 本部分的说明可以在[docs/MANUAL_UPDATE.zh.md](./docs/MANUAL_UPDATE.zh.md)找到。
 
