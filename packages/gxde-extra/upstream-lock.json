@@ -112,12 +112,12 @@
     "sha256": "0daead16e7dac4016a749104cb16fe5e287069e5f09886587e63b7f8424da9e9"
   },
   "gxde-image-viewer": {
-    "version": "1.7.5",
-    "release": 2,
-    "tag": "1.7.5",
-    "commit": "a514245316372edb570c22c58e9c5baa66fe1dd5",
-    "url": "https://codeload.github.com/GXDE-OS/gxde-image-viewer/tar.gz/a514245316372edb570c22c58e9c5baa66fe1dd5",
-    "sha256": "86024947b4793a7a726928ca2346ce06bcb22002ea3226131ecee294f58810d3"
+    "version": "1.7.6",
+    "release": 1,
+    "tag": "1.7.6",
+    "commit": "9226549ebc3364c9955722a6d0d26d0f42cd2134",
+    "url": "https://codeload.github.com/GXDE-OS/gxde-image-viewer/tar.gz/9226549ebc3364c9955722a6d0d26d0f42cd2134",
+    "sha256": "bc4e96d937d8fd9d0ce2f434bba21a2552998f4e542524a99d669182cdca97d7"
   },
   "gxde-log-viewer": {
     "version": "6.5.42",
