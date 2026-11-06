@@ -88,6 +88,10 @@ EXTRA_BUILDREQS = {
     'spark-webapp-runtime': ['qt6-qtwebengine-devel'],
 }
 
+PACKAGE_PATCHES = {
+    ('gxde-music', '4.0.2'): ['gxde-music-4.0.2-add-missing-ui-theme-token.patch'],
+}
+
 
 def load_script(name):
     spec = importlib.util.spec_from_file_location(name, Path(__file__).with_name(name + '.py'))
@@ -163,9 +167,14 @@ def prepare_one(name, lock):
             content = tar.extractfile(member_name).read()
             (output / 'SOURCES' / output_name).write_bytes(content)
             checks.append(f'{hashlib.sha256(content).hexdigest()}  {output_name}')
-    (output / 'SOURCES/sources.sha256').write_text('\n'.join(checks) + '\n')
     for file in ('build.sh', 'split-files.py'):
         shutil.copyfile(PACKAGE / file, output / 'SOURCES' / file)
+    patches = PACKAGE_PATCHES.get((name, item['tag']), [])
+    for patch in patches:
+        patch_source = PACKAGE / patch
+        shutil.copyfile(patch_source, output / 'SOURCES' / patch)
+        checks.append(f'{hashlib.sha256(patch_source.read_bytes()).hexdigest()}  {patch}')
+    (output / 'SOURCES/sources.sha256').write_text('\n'.join(checks) + '\n')
     (output / 'SOURCES/upstream-lock.json').write_text(json.dumps(item, indent=2) + '\n')
     spec = (PACKAGE / 'extra.spec.in').read_text()
     values = {'@NAME@': name, '@VERSION@': item['version'], '@RELEASE@': str(item['release']),
@@ -173,6 +182,12 @@ def prepare_one(name, lock):
               '@UPSTREAM@': meta['upstream'], '@SUMMARY@': meta['summary'],
               '@LICENSE@': meta['license'],
               '@SOURCE@': f'Source0:        {item["url"]}#/{filename}',
+              '@PATCHES@': '\n'.join(f'Patch{index}:         {patch}'
+                                     for index, patch in enumerate(patches)),
+              '@PREP_PATCHES@': ('pushd upstream\n' +
+                                 '\n'.join(f'%patch -P {index} -p1'
+                                           for index in range(len(patches))) +
+                                 '\npopd' if patches else ''),
               '@BUILDREQS@': build_requires(name, meta),
               '@REQUIRES@': runtime_requires(name, meta),
               '@PROVIDES@': provides(name, meta),

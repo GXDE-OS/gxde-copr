@@ -53,7 +53,7 @@ class Prepare(unittest.TestCase):
     def test_lock_has_three_components(self):
         lock = json.loads((gxdm.sources.PACKAGE / 'upstream-lock.json').read_text())
         self.assertEqual(len(lock['components']), 3)
-        self.assertEqual(lock['components']['gxde-display-manager']['tag'], '1.3.2-gxde2')
+        self.assertEqual(lock['components']['gxde-display-manager']['tag'], '1.3.6-gxde6')
         self.assertEqual(lock['components']['gxdm-emergency-mode']['tag'], '1.0.0-gxde2')
         self.assertEqual(lock['components']['MavenPro-OFL']['commit'],
                          '1c21ee500b7b87a4871696519fc84107a1a001df')

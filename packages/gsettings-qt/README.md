@@ -4,7 +4,7 @@ DTK5 requires `pkgconfig(gsettings-qt)`. Fedora 45 no longer ships this
 dependency: Fedora dist-git's `dead.package` records retirement under
 https://pagure.io/fesco/issue/3409.
 
-Rebuild the Fedora 44 packaging in the same COPR before building DTK5:
+Rebuild Fedora's last maintained packaging in the same COPR before building DTK5:
 
 ```bash
 copr-cli build-distgit --name gsettings-qt --distgit fedora \
@@ -26,6 +26,5 @@ Initial bootstrap build:
 https://copr.fedorainfracloud.org/coprs/build/11170154
 
 The Fedora 45 CI container enables this COPR so the same dependency is
-available for build and installation checks. Fedora 44 uses its official
-distribution package. The scheduled DTK tag workflow does not update this
-bootstrap dependency automatically.
+available for build and installation checks. The scheduled DTK tag workflow
+does not update this bootstrap dependency automatically.

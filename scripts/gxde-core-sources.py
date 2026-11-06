@@ -102,7 +102,7 @@ def describe_branch_tag(repo_url, branch):
                 text=True).strip()
         return tag, commit
 
-# ---- BuildRequires building blocks (Fedora 44/45 names) ----
+# ---- BuildRequires building blocks (Fedora 45 names) ----
 BASE = [
     'gcc gcc-c++ make cmake ninja-build pkgconf-pkg-config',
     'python3 gettext jq',

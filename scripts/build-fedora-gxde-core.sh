@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Run inside a disposable Fedora 44/45 container with the repository at /work.
+# Run inside a disposable Fedora 45 container with the repository at /work.
 # Builds the split gxde-core packages in dependency-wave order; each wave's
 # RPMs are installed before the next so intra-project BuildRequires
 # (gxde-libs-devel, gxde-dock-devel, gxde-app-management-devel) resolve.
 set -euo pipefail
 source /etc/os-release
-if [[ "$ID" != fedora || ! "$VERSION_ID" =~ ^(44|45)$ ]]; then
-    echo 'This script requires a Fedora 44 or 45 container.' >&2
+if [[ "$ID" != fedora || "$VERSION_ID" != 45 ]]; then
+    echo 'This script requires a Fedora 45 container.' >&2
     exit 1
 fi
 cd /work

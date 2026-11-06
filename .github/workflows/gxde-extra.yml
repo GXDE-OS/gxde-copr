@@ -80,7 +80,7 @@ jobs:
       fail-fast: false
       matrix:
         package: ${{ fromJSON(needs.sources.outputs.packages) }}
-        fedora: [44, 45]
+        fedora: [45]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
@@ -112,7 +112,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          pattern: extra-*-44
+          pattern: extra-*-45
           path: result
       - name: Submit successful packages to COPR
         env:
@@ -136,8 +136,7 @@ jobs:
             if [[ $name != gio-qt6 && $name != libimagevisualresult6 ]]; then continue; fi
             mapfile -t srpms < <(find result -name "$name-*.src.rpm")
             test "${#srpms[@]}" -eq 1
-            out=$($copr build --nowait --chroot fedora-44-x86_64 --chroot fedora-44-aarch64 \
-                --chroot fedora-45-x86_64 --chroot fedora-45-aarch64 \
+            out=$($copr build --nowait --chroot fedora-45-x86_64 --chroot fedora-45-aarch64 \
                 "$COPR_GXDE_EXTRA_PROJECT" "${srpms[0]}")
             echo "$out"
             id=$(sed -nE 's/^Created builds: ([0-9]+).*$/\1/p' <<<"$out" | head -n1)
@@ -152,8 +151,7 @@ jobs:
             fi
             mapfile -t srpms < <(find result -name "$name-*.src.rpm")
             test "${#srpms[@]}" -eq 1
-            out=$($copr build --nowait --chroot fedora-44-x86_64 --chroot fedora-44-aarch64 \
-                --chroot fedora-45-x86_64 --chroot fedora-45-aarch64 \
+            out=$($copr build --nowait --chroot fedora-45-x86_64 --chroot fedora-45-aarch64 \
                 "$COPR_GXDE_EXTRA_PROJECT" "${srpms[0]}")
             echo "$out"
             id=$(sed -nE 's/^Created builds: ([0-9]+).*$/\1/p' <<<"$out" | head -n1)
@@ -166,8 +164,7 @@ jobs:
           for name in "${deferred[@]}"; do
             mapfile -t srpms < <(find result -name "$name-*.src.rpm")
             test "${#srpms[@]}" -eq 1
-            $copr build --chroot fedora-44-x86_64 --chroot fedora-44-aarch64 \
-                --chroot fedora-45-x86_64 --chroot fedora-45-aarch64 \
+            $copr build --chroot fedora-45-x86_64 --chroot fedora-45-aarch64 \
                 "$COPR_GXDE_EXTRA_PROJECT" "${srpms[0]}" || failed=1
             if (( failed )); then exit 1; fi
           done

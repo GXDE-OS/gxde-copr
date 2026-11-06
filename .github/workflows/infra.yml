@@ -49,7 +49,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        fedora: [44, 45]
+        fedora: [45]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
@@ -77,9 +77,9 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: infra-fedora-44
+          name: infra-fedora-45
           path: result
-      - name: Submit only after both Fedora builds pass
+      - name: Submit after the Fedora build passes
         env:
           COPR_CONFIG: ${{ secrets.COPR_CONFIG }}
           COPR_INFRA_PROJECT: ${{ vars.COPR_INFRA_PROJECT }}
@@ -92,7 +92,7 @@ jobs:
           printf '%s\n' "$COPR_CONFIG" > "$config"
           mapfile -t srpms < <(find result -name '*.src.rpm')
           test "${#srpms[@]}" -eq 1
-          "$HOME/.local/bin/copr-cli" --config "$config" build --chroot fedora-44-x86_64 --chroot fedora-44-aarch64 --chroot fedora-45-x86_64 --chroot fedora-45-aarch64 "$COPR_INFRA_PROJECT" "${srpms[0]}"
+          "$HOME/.local/bin/copr-cli" --config "$config" build --chroot fedora-45-x86_64 --chroot fedora-45-aarch64 "$COPR_INFRA_PROJECT" "${srpms[0]}"
 
   record:
     needs: [sources, build, copr]

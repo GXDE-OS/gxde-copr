@@ -14,7 +14,7 @@
 - 上游来源：[e3a80079](https://github.com/GXDE-OS/dtk6core/commit/e3a80079cc185fe5c000d9490f72926629088ecb)。仅添加源码目录前缀，补丁内容相同。
 - 原因：COPR 11170214 的 Qt 6.11 中，旧 `QFSFileEngine::entryList` 已移除。
 - 修改：仅在 Qt < 6.11 时编译旧 entryList 声明和实现，新版沿用已有 beginEntryList。
-- 移除条件：正式 tag 包含上述提交并通过 Fedora 44/45 验证。
+- 移除条件：正式 tag 包含上述提交并通过 Fedora 45 验证。
 - Release 4 曾应用；现已切换到正式 tag `6.0.48-gxde1`（`5b38ef81734e`），确认包含上述修复，删除回补补丁。新标签的 Fedora 构建待验证。已向用户报告。
 
 

@@ -10,9 +10,9 @@
 ## 0001-network-utils-lrelease-path.patch
 
 - 组件/tag：`gxde-network-utils-qt6 6.0.1-arch1`，提交 `2d3ecd17b03e`。
-- 原因：上游 `translate_generation.sh` 将 Qt6 `lrelease` 固定为 `/usr/lib/qt6/bin/lrelease`；Fedora 44/45 的 `qt6-linguist` 提供 `/usr/bin/lrelease-qt6`，导致 COPR 11170578 的翻译生成失败。
+- 原因：上游 `translate_generation.sh` 将 Qt6 `lrelease` 固定为 `/usr/lib/qt6/bin/lrelease`；Fedora 45 的 `qt6-linguist` 提供 `/usr/bin/lrelease-qt6`，导致 COPR 11170578 的翻译生成失败。
 - 修改：优先通过 `PATH` 查找 `lrelease-qt6`，其次查找 `lrelease`，缺失时明确报错。保留翻译生成，不触及 C++ 源码。
-- 移除条件：GXDE 正式标签的脚本不再使用固定路径，且在 Fedora 44/45 完成构建验证。
+- 移除条件：GXDE 正式标签的脚本不再使用固定路径，且在 Fedora 45 完成构建验证。
 
 已在此轮对用户报告。
 

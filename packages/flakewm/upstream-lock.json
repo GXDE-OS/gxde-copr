@@ -1,12 +1,12 @@
 {
-  "version": "3.0.3.gxde1",
+  "version": "3.0.3.gxde5",
   "release": 1,
   "components": {
     "flakewm": {
-      "tag": "3.0.3-gxde1",
-      "commit": "004f1f84900924870062dba007673910bf3c0167",
-      "url": "https://codeload.github.com/GXDE-OS/flake-wm/tar.gz/004f1f84900924870062dba007673910bf3c0167",
-      "sha256": "ef977909ace81527c6450974f3a8b393a01b88ac22018bc7a3a1419ced788dca"
+      "tag": "3.0.3-gxde5",
+      "commit": "0a428505f93054b067b1e095302e0ee035a60ed1",
+      "url": "https://codeload.github.com/GXDE-OS/flake-wm/tar.gz/0a428505f93054b067b1e095302e0ee035a60ed1",
+      "sha256": "ccec5c401f0e8eb0c97840fbe6d86882183341ca16dfeecfa3bb55f9d9181e85"
     }
   }
 }

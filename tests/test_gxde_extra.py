@@ -56,6 +56,16 @@ class ExtraSourceTests(unittest.TestCase):
                 _, item = extra.resolve_one('gxde-calculator', extra.MANIFEST['gxde-calculator'], previous)
         self.assertEqual(3, item['release'])
 
+    def test_music_missing_header_patch_is_registered(self):
+        patches = extra.PACKAGE_PATCHES[('gxde-music', '4.0.2')]
+        self.assertEqual(['gxde-music-4.0.2-add-missing-ui-theme-token.patch'], patches)
+        patch = ROOT / 'packages/gxde-extra' / patches[0]
+        self.assertTrue(patch.is_file())
+        self.assertIn('src/music-player/view/uithemetoken.h', patch.read_text())
+        template = (ROOT / 'packages/gxde-extra/extra.spec.in').read_text()
+        self.assertIn('@PATCHES@', template)
+        self.assertIn('@PREP_PATCHES@', template)
+
 
 if __name__ == '__main__':
     unittest.main()

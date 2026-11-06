@@ -1,6 +1,6 @@
 {
   "version": "6.7.43",
-  "release": 4,
+  "release": 5,
   "components": {
     "dtk5common": {
       "tag": "6.7.43",
@@ -45,10 +45,10 @@
       "sha256": "c08b5099429b709ad87ad74a2fe453cc8f20ca8fc95eb720bb673aaad9b1b829"
     },
     "treeland-protocols": {
-      "tag": "0.7.0",
-      "commit": "49e985e0fb0b55fd2299349f08bac14c4e09f2b3",
-      "url": "https://codeload.github.com/linuxdeepin/treeland-protocols/tar.gz/49e985e0fb0b55fd2299349f08bac14c4e09f2b3",
-      "sha256": "79fad4e6243b03ecac486ff2eaf2970f7e88523b38e8d1a26faf0c8b6bb2fff6"
+      "tag": "0.9.0",
+      "commit": "578263755cb80b56f2e13fde34da1c294418e608",
+      "url": "https://codeload.github.com/linuxdeepin/treeland-protocols/tar.gz/578263755cb80b56f2e13fde34da1c294418e608",
+      "sha256": "9ea8288214f748904b04e4b343530285d1addb3e2e4d6644211804a3c6148cb5"
     }
   }
 }

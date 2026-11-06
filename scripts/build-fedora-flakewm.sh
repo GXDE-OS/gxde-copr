@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Run inside a disposable Fedora 44/45 container with the repository at /work.
+# Run inside a disposable Fedora 45 container with the repository at /work.
 set -euo pipefail
 source /etc/os-release
-if [[ "$ID" != fedora && "$ID" != evernight ]]; then
-    echo 'This script requires a Fedora container.' >&2
+if [[ ("$ID" != fedora && "$ID" != evernight) || "$VERSION_ID" != 45 ]]; then
+    echo 'This script requires a Fedora 45 compatible container.' >&2
     exit 1
 fi
 cd /work

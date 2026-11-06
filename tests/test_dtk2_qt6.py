@@ -31,8 +31,9 @@ class DTK2Qt6(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp, patch.object(sources, 'download'):
             sources.prepare(lock, Path(tmp))
             spec = (Path(tmp) / 'SPECS/gxde-dtk2-qt6.spec').read_text()
-            self.assertIn('Version:        6.3.6', spec)
-            self.assertIn('gxde-qt6-integration/tar.gz/4663ffcd88b8451bcce793ed190c22e8119f8b48', spec)
+            self.assertIn(f'Version:        {lock["version"]}', spec)
+            integration = lock['components']['gxde-qt6-integration']
+            self.assertIn(f'gxde-qt6-integration/tar.gz/{integration["commit"]}', spec)
 
 
 if __name__ == '__main__':

@@ -49,7 +49,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        fedora: [44, 45]
+        fedora: [45]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
@@ -77,9 +77,9 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: gxde-core-fedora-44
+          name: gxde-core-fedora-45
           path: result
-      - name: Submit wave by wave after both Fedora builds pass
+      - name: Submit wave by wave after the Fedora build passes
         env:
           COPR_CONFIG: ${{ secrets.COPR_CONFIG }}
           COPR_GXDE_CORE_PROJECT: ${{ vars.COPR_GXDE_CORE_PROJECT }}
@@ -92,8 +92,7 @@ jobs:
           trap 'rm -f "$config"' EXIT
           printf '%s\n' "$COPR_CONFIG" > "$config"
           copr="$HOME/.local/bin/copr-cli --config $config"
-          chroots=(--chroot fedora-44-x86_64 --chroot fedora-44-aarch64
-                   --chroot fedora-45-x86_64 --chroot fedora-45-aarch64)
+          chroots=(--chroot fedora-45-x86_64 --chroot fedora-45-aarch64)
           # Same waves as scripts/build-fedora-gxde-core.sh; intra-wave builds
           # are submitted --nowait in parallel, then watched before the next
           # wave so intra-project BuildRequires exist in the project repo.

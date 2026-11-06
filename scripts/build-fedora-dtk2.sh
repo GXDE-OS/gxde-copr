@@ -2,8 +2,8 @@
 # Run as root INSIDE a disposable Fedora container, with the repository at /work.
 set -euo pipefail
 source /etc/os-release
-if [[ "$ID" != fedora || ! "$VERSION_ID" =~ ^(44|45)$ ]]; then
-    echo 'This script requires a disposable Fedora 44 or 45 container.' >&2
+if [[ "$ID" != fedora || "$VERSION_ID" != 45 ]]; then
+    echo 'This script requires a disposable Fedora 45 container.' >&2
     exit 1
 fi
 cd /work

@@ -1,0 +1,60 @@
+diff --git a/src/music-player/view/uithemetoken.h b/src/music-player/view/uithemetoken.h
+new file mode 100644
+index 00000000..a03274d1
+--- /dev/null
++++ b/src/music-player/view/uithemetoken.h
+@@ -0,0 +1,54 @@
++/*
++ * SPDX-License-Identifier: GPL-3.0-or-later
++ *
++ * The 4.0.2 release started using these shared UI tokens but omitted this
++ * header from the release tree. Keep the definitions local and palette-aware
++ * until an upstream release ships the missing file.
++ */
++#ifndef UITHEMETOKEN_H
++#define UITHEMETOKEN_H
++
++#include <QColor>
++#include <QGuiApplication>
++#include <QPalette>
++#include <QString>
++
++namespace UiToken {
++
++inline constexpr int Radius = 4;
++inline constexpr int Spacing = 20;
++inline constexpr int HintHeight = 32;
++inline constexpr int FooterHeight = 60;
++inline constexpr int FooterCoverSize = 40;
++inline constexpr int IconButtonSize = 24;
++inline constexpr int PlaylistPanelWidth = 220;
++inline constexpr int ActionBarHeight = 40;
++inline constexpr int BodyFontSize = 12;
++inline constexpr int SoundVolumeWidth = 40;
++inline constexpr int SoundVolumeHeight = 106;
++inline constexpr int SoundVolumeSliderHeight = 90;
++
++inline QColor withOpacity(QColor color, qreal opacity)
++{
++    color.setAlphaF(opacity);
++    return color;
++}
++
++inline QColor foreground(qreal opacity = 1.0)
++{
++    return withOpacity(QGuiApplication::palette().color(QPalette::WindowText), opacity);
++}
++
++inline QColor background(qreal opacity = 1.0)
++{
++    return withOpacity(QGuiApplication::palette().color(QPalette::Window), opacity);
++}
++
++inline QString accentName()
++{
++    return QGuiApplication::palette().color(QPalette::Highlight).name();
++}
++
++} // namespace UiToken
++
++#endif // UITHEMETOKEN_H

@@ -55,7 +55,7 @@ class Infra(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp, patch.object(infra.sources, 'download'):
             infra.prepare(lock, Path(tmp))
             spec = (Path(tmp) / 'SPECS/gxde-infra.spec').read_text()
-            self.assertIn('Version:        2026.10.12', spec)
+            self.assertIn(f'Version:        {lock["version"]}', spec)
             self.assertIn('treeland-protocols/tar.gz/', spec)
             self.assertIn('Source24:       gxde-k9.tmpfiles.conf', spec)
 

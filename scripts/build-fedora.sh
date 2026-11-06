@@ -2,17 +2,15 @@
 # Run as root INSIDE a disposable Fedora container, with the repository at /work.
 set -euo pipefail
 source /etc/os-release
-if [[ "$ID" != fedora || ! "$VERSION_ID" =~ ^(44|45)$ ]]; then
-    echo 'This script requires a disposable Fedora 44 or 45 container.' >&2
+if [[ "$ID" != fedora || "$VERSION_ID" != 45 ]]; then
+    echo 'This script requires a disposable Fedora 45 container.' >&2
     exit 1
 fi
 cd /work
 dnf -y install rpm-build redhat-rpm-config dnf5-plugins python3 shadow-utils
 # gsettings-qt was retired from Fedora 45. Our COPR rebuilds Fedora's last
-# maintained recipe; Fedora 44 continues to use its distribution package.
-if [[ "$VERSION_ID" == 45 ]]; then
-    dnf -y copr enable charofstring/gxde-dtk5
-fi
+# maintained recipe.
+dnf -y copr enable charofstring/gxde-dtk5
 python3 scripts/dtk5-sources.py prepare --output /work/build/rpmbuild
 dnf -y builddep /work/build/rpmbuild/SPECS/gxde-dtk5.spec
 id builder >/dev/null 2>&1 || useradd --create-home builder

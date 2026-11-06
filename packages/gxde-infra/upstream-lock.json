@@ -1,6 +1,6 @@
 {
-  "version": "2026.10.12",
-  "release": 14,
+  "version": "2026.11.03",
+  "release": 1,
   "components": {
     "golang-gxde-dev": {
       "tag": "1.0.6",
@@ -39,10 +39,10 @@
       "sha256": "0d417d622e3f2031a248426f4faee661fca205537a54d6271669aaaddd71baf6"
     },
     "gxde-desktop-base": {
-      "tag": "2026.10.12",
-      "commit": "6f1624c60e434cdca4348d5160fa37e5ff3af1ef",
-      "url": "https://codeload.github.com/GXDE-OS/gxde-desktop-base/tar.gz/6f1624c60e434cdca4348d5160fa37e5ff3af1ef",
-      "sha256": "8ea9181595590cd0bf67386bc8abb38b8ed3e57c6c16b822e89dae29abe48a3e"
+      "tag": "2026.11.03",
+      "commit": "9c726fd2f6e2732b933ec423817c6345f5a7b50b",
+      "url": "https://codeload.github.com/GXDE-OS/gxde-desktop-base/tar.gz/9c726fd2f6e2732b933ec423817c6345f5a7b50b",
+      "sha256": "a8833de9c4a6d3061d76d072301db2e28f6c992de46b1501a1ec8de308929041"
     },
     "gxde-desktop-schemas": {
       "tag": "4.0.8",
@@ -69,10 +69,10 @@
       "sha256": "e4f7e5788302144166753173b3710a9b79a1b1bc70577d68f5ccbb1378bbedca"
     },
     "gxde-movie-reborn": {
-      "tag": "4.0.7-arch1",
-      "commit": "f035dac89592031f8a7c31ba4ebc4cadf4335597",
-      "url": "https://codeload.github.com/GXDE-OS/gxde-movie-reborn/tar.gz/f035dac89592031f8a7c31ba4ebc4cadf4335597",
-      "sha256": "4fc16fb527621fbb1680dadd2c5fae47423c54fe310f3819d9f265efc7bccb8b"
+      "tag": "4.0.9",
+      "commit": "2902e8cc311d73a8419388e6c94d02240bc8e693",
+      "url": "https://codeload.github.com/GXDE-OS/gxde-movie-reborn/tar.gz/2902e8cc311d73a8419388e6c94d02240bc8e693",
+      "sha256": "9f7054f37f83a0a9005c5d9e5625dd672328b0a0dac0d4af7a3a3553db9da1a8"
     },
     "libdbusmenu-qt6": {
       "tag": "0.9.3+16.04.20160218-arch1",
@@ -81,10 +81,10 @@
       "sha256": "a95f589d474b5fd9b989fc9a8dd4673678c9508911da2441cb576830094beb46"
     },
     "treeland-protocols": {
-      "tag": "0.7.0",
-      "commit": "49e985e0fb0b55fd2299349f08bac14c4e09f2b3",
-      "url": "https://codeload.github.com/linuxdeepin/treeland-protocols/tar.gz/49e985e0fb0b55fd2299349f08bac14c4e09f2b3",
-      "sha256": "79fad4e6243b03ecac486ff2eaf2970f7e88523b38e8d1a26faf0c8b6bb2fff6"
+      "tag": "0.9.0",
+      "commit": "578263755cb80b56f2e13fde34da1c294418e608",
+      "url": "https://codeload.github.com/linuxdeepin/treeland-protocols/tar.gz/578263755cb80b56f2e13fde34da1c294418e608",
+      "sha256": "9ea8288214f748904b04e4b343530285d1addb3e2e4d6644211804a3c6148cb5"
     },
     "xdg-desktop-portal-gxde": {
       "tag": "1.2.5",

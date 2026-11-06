@@ -1,6 +1,14 @@
 # gxde-extra 源码修改登记
 
-当前没有独立的 `.patch` 文件，也不使用 tag 之后的 Git 提交。
+不使用 tag 之后的 Git 提交。当前有一个针对正式 tag 缺失文件的独立补丁：
+
+- `gxde-music` 4.0.2：`gxde-music-4.0.2-add-missing-ui-theme-token.patch`
+  补入上游提交 `e88aaac3` 引用、但没有加入仓库的
+  `src/music-player/view/uithemetoken.h`。该标签内十个源文件使用
+  `UiToken::*`，导致 COPR 11270762 在首个包含点直接编译失败。补丁只定义
+  已被调用的尺寸常量和基于当前 Qt palette 的前景、背景、强调色函数，
+  不引入 tag 之后的代码。上游正式标签包含等价头文件或移除这些引用后，
+  应删除此补丁。
 
 ## 构建树内修改
 
@@ -35,12 +43,12 @@ Clone 首轮 11177684 缺 Qt5 私有头 `private/qiodevice_p.h`，且翻译阶�
   上游保留调用者 CMake flags 后可移除。
 - `gxde-ocr` 2.0.1：在构建树的 `src/CMakeLists.txt`，将捆绑 OpenCV 和
   ncnn 静态库路径中的 `build/install/lib/` 改为 `build/install/lib64/`。
-  Fedora 44/45 的 `GNUInstallDirs` 将它们安装到 `lib64`，COPR 11177694
+  Fedora 45 的 `GNUInstallDirs` 将它们安装到 `lib64`，COPR 11177694
   因此找不到 `libopencv_world.a`。上游使用 `CMAKE_INSTALL_LIBDIR` 而非
   写死 `lib` 后可移除。
 - `dde-clipboard` 6.6.2：在构建树的根 `CMakeLists.txt` 将
   `/usr/lib/qt6/bin/qdbusxml2cpp` 改为 `/usr/bin/qdbusxml2cpp-qt6`。
-  Fedora 44/45 的 `qt6-qtbase-devel` 提供后者；COPR 11177954 因前者
+  Fedora 45 的 `qt6-qtbase-devel` 提供后者；COPR 11177954 因前者
   不存在，未生成 `clipboard_adaptor.h`。上游使用 Qt CMake 工具变量后可移除。
 - `gxde-log-viewer` 6.5.42：在构建树的
   `3rdparty/DocxFactory/include/DocxFactory/zip/FileInfo.h`、
