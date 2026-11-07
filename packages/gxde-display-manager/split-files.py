@@ -15,6 +15,7 @@ def main():
               '/usr/share/gxdm/translations-qt6',
               '/usr/share/gxdm/themes', '/usr/share/gxdm/faces', '/usr/share/gxdm/flags',
               '/usr/share/icons', '/usr/share/icons/hicolor',
+              '/usr/share/selinux', '/usr/share/selinux/packages',
               '/usr/share/wayland-sessions', '/usr/share/xsessions',
               '/var', '/var/lib', '/var/lib/gxdm', '/var/log',
               str(libdir), f'{libdir}/qt6', f'{libdir}/qt6/qml', f'{libdir}/qt6/plugins'}
@@ -36,6 +37,8 @@ def main():
         # themselves are included below; the directory is auto-created by
         # %license in the spec.
         if path == '/usr/share/licenses/gxde-display-manager':
+            continue
+        if path == '/usr/share/selinux/packages/gxdm.pp.bz2':
             continue
         runtime.append(manifest)
     if not runtime:

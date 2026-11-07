@@ -1,6 +1,6 @@
 {
   "version": "1.3.6.gxde6",
-  "release": 1,
+  "release": 3,
   "components": {
     "gxde-display-manager": {
       "tag": "1.3.6-gxde6",

@@ -1,0 +1,6 @@
+/usr/bin/gxdm                                      --  gen_context(system_u:object_r:xdm_exec_t,s0)
+/usr/bin/gxdm-greeter(-.*)?                        --  gen_context(system_u:object_r:xdm_exec_t,s0)
+/usr/lib/gxdm/gxdm-helper.*                        --  gen_context(system_u:object_r:bin_t,s0)
+/usr/share/gxdm/scripts(/.*)?                           gen_context(system_u:object_r:bin_t,s0)
+/var/lib/gxdm(/.*)?                                     gen_context(system_u:object_r:xdm_var_lib_t,s0)
+/run/gxdm(/.*)?                                         gen_context(system_u:object_r:xdm_var_run_t,s0)

@@ -1,0 +1,8 @@
+policy_module(gxdm, 1.0.0)
+
+gen_require(`
+    type bin_t;
+    type xdm_exec_t;
+    type xdm_var_lib_t;
+    type xdm_var_run_t;
+')

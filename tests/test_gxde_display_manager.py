@@ -96,6 +96,13 @@ class Prepare(unittest.TestCase):
             for pam in ('gxdm.pam', 'gxdm-autologin.pam',
                         'gxdm-greeter.pam', 'gxdm-rescue.pam'):
                 self.assertIn(pam, spec, f'{pam} missing from spec')
+            self.assertIn('Source14:       gxdm.te', spec)
+            self.assertIn('Source15:       gxdm.fc', spec)
+            self.assertIn('%package selinux', spec)
+            self.assertIn('%selinux_modules_install', spec)
+            self.assertIn('%selinux_modules_install -s %{selinuxtype} %{_datadir}', spec)
+            self.assertTrue((Path(tmp) / 'SOURCES/gxdm.te').exists())
+            self.assertTrue((Path(tmp) / 'SOURCES/gxdm.fc').exists())
             # PAM install disabled in cmake (build.sh, not spec).
             build_sh = (gxdm.sources.PACKAGE / 'build.sh').read_text()
             self.assertIn('INSTALL_PAM_CONFIGURATION=OFF', build_sh)

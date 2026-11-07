@@ -1,4 +1,6 @@
 # Generated from upstream-lock.json; see PATCHES.md for source patch history.
+%global selinuxtype targeted
+%global modulename gxdm
 @COMMITS@
 Name:           gxde-display-manager
 Version:        @VERSION@
@@ -17,6 +19,8 @@ Source10:       gxdm.pam
 Source11:       gxdm-autologin.pam
 Source12:       gxdm-greeter.pam
 Source13:       gxdm-rescue.pam
+Source14:       gxdm.te
+Source15:       gxdm.fc
 ExclusiveArch:  x86_64 aarch64
 
 BuildRequires:  gcc gcc-c++ cmake ninja-build
@@ -42,6 +46,7 @@ Requires:       gxde-dtk6 gxde-dtk2-qt6 gsettings-qt6
 Requires:       pam systemd-libs dbus kbd
 Requires:       xauth bash
 Recommends:     selinux-policy-targeted
+Requires:       %{name}-selinux = %{version}-%{release}
 
 Recommends:     flakewm
 Recommends:     accountsservice
@@ -58,6 +63,15 @@ GXDE Display Manager is a fork of SDDM maintained by GXDE OS contributors.
 It provides a Wayland-native greeter using DTK6 and an emergency-mode
 terminal rescue tool. X11 is no longer provided.
 
+%package selinux
+Summary:        SELinux policy for GXDE Display Manager
+BuildArch:      noarch
+%selinux_requires
+
+%description selinux
+SELinux file contexts that run GXDM in Fedora's standard display-manager
+domain and permit authenticated desktop sessions to start.
+
 %prep
 (cd %{_sourcedir} && sha256sum -c %{SOURCE102})
 %setup -q -c -T -a 0 -a 1
@@ -66,6 +80,8 @@ mv gxdm-emergency-mode-%{commit1} gxdm-emergency-mode
 # Extract vendored Rust crates into the emergency-mode tree.
 tar xf %{SOURCE2} -C gxdm-emergency-mode
 cp %{SOURCE3} MavenPro-OFL.txt
+cp %{SOURCE14} gxdm.te
+cp %{SOURCE15} gxdm.fc
 cp %{SOURCE103} upstream-lock.json
 mkdir licenses
 cp gxde-display-manager/debian/copyright licenses/gxde-display-manager.copyright 2>/dev/null || :
@@ -74,6 +90,8 @@ cp gxdm-emergency-mode/LICENSE licenses/gxdm-emergency-mode.LICENSE 2>/dev/null 
 %build
 %set_build_flags
 bash %{SOURCE100} "%{_libdir}" "%{_smp_build_ncpus}"
+make -f %{_datadir}/selinux/devel/Makefile %{modulename}.pp
+bzip2 -9 %{modulename}.pp
 
 %install
 cp -a stage/. %{buildroot}/
@@ -101,6 +119,8 @@ install -Dm 644 MavenPro-OFL.txt \
     %{buildroot}%{_defaultlicensedir}/gxde-display-manager/OFL-MavenPro.txt
 
 find %{buildroot} -type f -name '*.la' -delete
+install -Dpm 644 %{modulename}.pp.bz2 \
+    %{buildroot}%{_datadir}/selinux/packages/%{modulename}.pp.bz2
 
 %check
 python3 %{SOURCE101} %{buildroot} %{_libdir}
@@ -117,6 +137,21 @@ fi
 %config(noreplace) %{_sysconfdir}/pam.d/gxdm-greeter
 %config(noreplace) %{_sysconfdir}/pam.d/gxdm-rescue
 %config(noreplace) %{_sysconfdir}/gxdm/OMG.conf
+
+%pre selinux
+%selinux_relabel_pre -s %{selinuxtype}
+
+%post selinux
+%selinux_modules_install -s %{selinuxtype} %{_datadir}/selinux/packages/%{modulename}.pp.bz2
+
+%postun selinux
+%selinux_modules_uninstall -s %{selinuxtype} %{modulename}
+
+%posttrans selinux
+%selinux_relabel_post -s %{selinuxtype}
+
+%files selinux
+%{_datadir}/selinux/packages/%{modulename}.pp.bz2
 
 %changelog
 * Mon Oct 19 2026 CharOfString <root@charofstring.cc> - @VERSION@-@RELEASE@

@@ -193,6 +193,8 @@ def prepare(lock, destination):
     # Fedora PAM files
     for pam in PACKAGE.glob("*.pam"):
         shutil.copyfile(pam, destination / "SOURCES" / pam.name)
+    for policy in ("gxdm.te", "gxdm.fc"):
+        shutil.copyfile(PACKAGE / policy, destination / "SOURCES" / policy)
     shutil.copyfile(PACKAGE / "upstream-lock.json", destination / "SOURCES/upstream-lock.json")
 
 
