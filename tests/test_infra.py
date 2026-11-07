@@ -58,6 +58,8 @@ class Infra(unittest.TestCase):
             self.assertIn(f'Version:        {lock["version"]}', spec)
             self.assertIn('treeland-protocols/tar.gz/', spec)
             self.assertIn('Source24:       gxde-k9.tmpfiles.conf', spec)
+            self.assertIn("sed -i '/^export .*QT_QPA_PLATFORM=/d'", spec)
+            self.assertIn("! grep -Eq '^export .*QT_QPA_PLATFORM='", spec)
 
 
 if __name__ == '__main__':

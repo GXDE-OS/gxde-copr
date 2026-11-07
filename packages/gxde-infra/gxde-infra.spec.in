@@ -111,6 +111,11 @@ rm -rf %{buildroot}/boot
 install -Dm644 deepin-keyring/keyrings/*.gpg -t %{buildroot}%{_datadir}/keyrings/
 make -C libgnome-keyring install DESTDIR=%{buildroot}
 make -C gxde-desktop-base install DESTDIR=%{buildroot} GXDE_CODENAME=zhuangzhuang
+# Do not force a Qt platform plugin globally.  Display-manager greeters source
+# profile.d before their Wayland compositor is ready; preferring dxcb/xcb there
+# makes both Plasma Login Manager and GXDM select XCB without a DISPLAY.
+sed -i '/^export .*QT_QPA_PLATFORM=/d' \
+    %{buildroot}%{_sysconfdir}/profile.d/gxde.sh
 rm -rf %{buildroot}/etc/apt %{buildroot}/etc/default/grub.d \
        %{buildroot}/etc/sudoers.d %{buildroot}/etc/systemd \
        %{buildroot}/usr/share/python-apt %{buildroot}/usr/share/distro-info \
@@ -133,6 +138,8 @@ if grep -R -l -F "$PWD/stage" %{buildroot}%{_libdir}/pkgconfig %{buildroot}%{_li
     echo 'Staging path leaked into installed development metadata' >&2
     exit 1
 fi
+! grep -Eq '^export .*QT_QPA_PLATFORM=' \
+    %{buildroot}%{_sysconfdir}/profile.d/gxde.sh
 
 %files -f runtime.files
 %license licenses/

@@ -2,6 +2,18 @@
 
 当前新增源码补丁：**1 项**。
 
+## Fedora 全局 Qt 平台变量修正（Release 2）
+
+- `gxde-desktop-base 2026.11.03` 安装的 `/etc/profile.d/gxde.sh` 全局设置
+  `QT_QPA_PLATFORM=dxcb;xcb;dwayland;wayland`。Display Manager 的 Wayland greeter
+  同样会读取该文件，Qt 因而在 `WAYLAND_DISPLAY` 已有、`DISPLAY` 尚未设置时优先加载
+  XCB；Plasma Login Manager 的 greeter/wallpaper 随即在 `libQt6XcbQpa` 中段错误，
+  GXDM 也无法稳定显示 greeter。
+- RPM 在 `%install` 的 buildroot 中删除这一项，让 Qt 根据会话自动选择平台；
+  `QT_QPA_PLATFORMTHEME`、`DTK2_XWAYLAND` 等其他 GXDE 设置不变。
+- 这是安装配置适配，**没有新增上游源码 patch**。已在 Fedora 45 测试机分别验证
+  Plasma Login Manager 和 `GXDM + FlakeWM + gxdm-greeter-neo` 正常运行。
+
 ## xdg-desktop-portal-gxde 1.2.5 手动更新
 
 - 从正式标签 `1.2.4` 更新到 `1.2.5`（提交 `c16a49325a5a`）；录屏 PipeWire 缓冲区标志修复已由上游提交 `58d31d2` 提供。
