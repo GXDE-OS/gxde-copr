@@ -1,0 +1,15 @@
+diff --git a/services/gxdm.service.in b/services/gxdm.service.in
+index 219a8fb..5215100 100644
+--- a/services/gxdm.service.in
++++ b/services/gxdm.service.in
+@@ -1,8 +1,8 @@
+ [Unit]
+ Description=GXDE Display Manager
+ Documentation=man:gxdm(1) man:gxdm.conf(5)
+-Conflicts=getty@tty${SDDM_INITIAL_VT}.service
+-After=systemd-user-sessions.service getty@tty${SDDM_INITIAL_VT}.service plymouth-quit.service systemd-logind.service
++Conflicts=getty@tty${SDDM_INITIAL_VT}.service kmsconvt@tty${SDDM_INITIAL_VT}.service
++After=systemd-user-sessions.service getty@tty${SDDM_INITIAL_VT}.service kmsconvt@tty${SDDM_INITIAL_VT}.service plymouth-quit.service systemd-logind.service
+ PartOf=graphical.target
+ StartLimitIntervalSec=30
+ StartLimitBurst=2

@@ -1,6 +1,20 @@
 # GXDE Display Manager 源码补丁登记
 
-当前新增源码补丁：**0 项**。
+当前新增源码补丁：**1 项**。
+
+## `0001-systemd-conflict-with-kmscon-vt.patch`
+
+- 组件/tag：`gxde-display-manager 1.3.6-gxde6`。
+- 原因：`kmsconvt@.service` 可通过 systemd 标准的 `autovt@.service` 别名替代
+  `getty@.service`，但上游 `gxdm.service` 只与 `getty@tty${SDDM_INITIAL_VT}`
+  冲突。启用 kmscon 新型 fbcon 后，两者会同时占用 GXDM 初始 VT，造成 greeter
+  或 FlakeWM 会话无法取得 DRM/VT。
+- 修改：在 `Conflicts=` 和 `After=` 中同时加入
+  `kmsconvt@tty${SDDM_INITIAL_VT}.service`。GXDM 启动时先停止同一 VT 上的 kmscon，
+  停止 GXDM 后 systemd/logind 仍可按原配置重新生成 kmscon autovt。
+- 依据：Fedora LightDM 已采用相同的 getty+kmscon 冲突/排序关系；systemd 上游
+  issue #41087 也记录了各显示管理器需要兼容 kmsconvt 的问题。
+- 移除条件：GXDE 正式标签的 `gxdm.service.in` 已包含同等的 kmsconvt 冲突关系。
 
 ## Fedora 适配（非源码补丁）
 

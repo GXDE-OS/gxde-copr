@@ -195,6 +195,8 @@ def prepare(lock, destination):
         shutil.copyfile(pam, destination / "SOURCES" / pam.name)
     for policy in ("gxdm.te", "gxdm.fc"):
         shutil.copyfile(PACKAGE / policy, destination / "SOURCES" / policy)
+    shutil.copyfile(PACKAGE / "0001-systemd-conflict-with-kmscon-vt.patch",
+                    destination / "SOURCES/0001-systemd-conflict-with-kmscon-vt.patch")
     shutil.copyfile(PACKAGE / "upstream-lock.json", destination / "SOURCES/upstream-lock.json")
 
 

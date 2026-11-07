@@ -21,6 +21,7 @@ Source12:       gxdm-greeter.pam
 Source13:       gxdm-rescue.pam
 Source14:       gxdm.te
 Source15:       gxdm.fc
+Patch0:         0001-systemd-conflict-with-kmscon-vt.patch
 ExclusiveArch:  x86_64 aarch64
 
 BuildRequires:  gcc gcc-c++ cmake ninja-build
@@ -77,6 +78,9 @@ domain and permit authenticated desktop sessions to start.
 %setup -q -c -T -a 0 -a 1
 mv gxde-display-manager-%{commit0} gxde-display-manager
 mv gxdm-emergency-mode-%{commit1} gxdm-emergency-mode
+pushd gxde-display-manager
+%patch -P 0 -p1
+popd
 # Extract vendored Rust crates into the emergency-mode tree.
 tar xf %{SOURCE2} -C gxdm-emergency-mode
 cp %{SOURCE3} MavenPro-OFL.txt
@@ -128,6 +132,10 @@ if grep -R -l -F "$PWD/stage" %{buildroot}%{_libdir}/pkgconfig %{buildroot}%{_li
     echo 'Staging path leaked into installed development metadata' >&2
     exit 1
 fi
+grep -Fqx 'Conflicts=getty@tty1.service kmsconvt@tty1.service' \
+    %{buildroot}%{_unitdir}/gxdm.service
+grep -Fqx 'After=systemd-user-sessions.service getty@tty1.service kmsconvt@tty1.service plymouth-quit.service systemd-logind.service' \
+    %{buildroot}%{_unitdir}/gxdm.service
 
 %files -f runtime.files
 %license licenses/
