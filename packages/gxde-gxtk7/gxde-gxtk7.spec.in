@@ -1,0 +1,54 @@
+# Generated from upstream-lock.json; source changes are listed in PATCHES.md.
+%global source_tag @TAG@
+%global source_commit @COMMIT@
+Name:           gxde-gxtk7
+Version:        @VERSION@
+Release:        @RELEASE@%{?dist}
+Summary:        GXDE Qt Quick Controls style and component library
+License:        GPL-3.0-or-later
+URL:            https://github.com/GXDE-OS/GXTK7
+Source0:        @URL@#/GXTK7-%{source_commit}.tar.gz
+Source1:        sources.sha256
+Source2:        split-files.py
+Source3:        upstream-lock.json
+ExclusiveArch:  x86_64 aarch64
+BuildRequires:  gcc-c++ cmake ninja-build python3
+BuildRequires:  qt6-qtbase-devel qt6-qtdeclarative-devel
+BuildRequires:  gxde-bernese-devel >= 1.0.3.gxde1
+Requires:       gxde-bernese >= 1.0.3.gxde1
+Provides:       gxtk7 = %{version}-%{release}
+Provides:       qml6-module-qtquick-controls-gxde = %{version}-%{release}
+
+%description
+GXTK 7 provides the QtQuick.Controls.Gxde style and component library, bringing
+the classic DTK2 appearance to modern Qt 6 Quick applications.
+
+%prep
+(cd %{_sourcedir} && sha256sum -c %{SOURCE1})
+%setup -q -c -T -a 0
+mv GXTK7-%{source_commit} upstream
+cp %{SOURCE3} upstream-lock.json
+
+%build
+%set_build_flags
+cmake -S upstream -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=%{_prefix} \
+    -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
+    -DCMAKE_BUILD_TYPE=None \
+    -DGXTK7_BUILD_EXAMPLES=OFF
+cmake --build build --parallel %{_smp_build_ncpus}
+
+%install
+DESTDIR=%{buildroot} cmake --install build
+python3 %{SOURCE2} %{buildroot} %{_libdir}
+
+%check
+test -e %{buildroot}%{_libdir}/qt6/qml/QtQuick/Controls/Gxde/qmldir
+
+%files -f runtime.files
+%license upstream/LICENSE
+%doc upstream/README.md upstream-lock.json
+
+%changelog
+* Sat Nov 07 2026 CharOfString <root@charofstring.cc> - @VERSION@-@RELEASE@
+- Package the latest pinned GXTK 7 release for Fedora 45

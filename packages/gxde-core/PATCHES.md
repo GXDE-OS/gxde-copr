@@ -4,7 +4,7 @@
 
 ## 拆分结构（2026-10-20 起）
 
-历史单包 bundle（45 模块 → 一个 gxde-core SRPM）已按用途拆分为 **16 个功能包 + 1 个元包**，
+历史单包 bundle 已按用途拆分为 **17 个功能包 + 1 个元包**，
 全部在 COPR 单项目 `charofstring/gxde-core` 下以多 package 形式构建（用户只需 enable 一个 repo）。
 
 - 生成器：`scripts/gxde-core-sources.py` 内的 `GROUPS` 清单驱动；`update` 解析全部模块写入共享
@@ -18,13 +18,14 @@
   `normalize_stage`），各组脚本在 `packages/gxde-core/groups/<group>.sh`，经 `%build` 第三参数 source。
 - `split-files.py`：devel 清单为空时不再报错（无 devel 面的组不声明 devel 子包）；
   有 devel 面的组：libs、dock、top-panel、launcher、polkit-agent、file-manager、search、
-  compressor（rofd.h/FFI）、app-management（deepin-qdbus-service，被 search 消费）。
+  compressor（rofd.h/FFI）、app-management（deepin-qdbus-service，被 search 消费）、
+  wallpaper-chooser（libgxde-wallpicker 静态库与头文件）。
 - 包间构建依赖（波次）：W1 artwork/libs/daemon/polkit-agent/installer/screensaver/terminal/
   compressor/launcher/session-ui/app-management → W2 dock/control-center →
-  W3 top-panel/file-manager → W4 search → W5 元包。
+  W3 top-panel/file-manager → W4 search/wallpaper-chooser → W5 元包。
   search 在 W4：grand-search 除 `deepin-qdbus-service`（app-management devel）外还
   `find_package(dfm6-search)`，该 cmake 配置由 util-dfm 安装（file-manager 组 devel）。
-  file-manager（W3）除 dock-devel/libs-devel 外还需 `gxde-compressor-devel`
+  file-manager（W3）除 dock-devel/libs-devel/Bernese-devel 外还需 `gxde-compressor-devel`
   （rofd.h/librofd_ffi，OFD 缩略图与预览插件用）——compressor 在 W1，波次序不变。
 - `gxde-shell-tools` 已从模块清单剔除：上游仓库只含 Arch 打包元数据（无源码），bundle 也从未构建它。
 
@@ -38,7 +39,7 @@
 - **gxde-top-panel lrelease**：上游 `find_program(QT_LRELEASE_EXECUTABLE /usr/lib/qt6/bin/lrelease)` 把 Debian 路径当程序名找，Fedora 上 NOTFOUND，ninja 执行 `QT_LRELEASE_EXECUTABLE-NOTFOUND` 直接 127。构建时传 `-DQT_LRELEASE_EXECUTABLE=$toolbin/lrelease` 预置缓存变量绕过搜索。file-manager 的 `GXDECommon.cmake` 用 `NAMES lrelease-qt6 lrelease6 lrelease` 按名搜索，PATH shim 可命中，无需处理。
 - **translation-generate.cmake 的 /lib/qtN/bin 回退**：deepin 系模块（deepin-screensaver、gxde-file-manager、gxde-top-panel）共用的 cmake 翻译模块在 `Qt${QT_VERSION_MAJOR}_LRELEASE_EXECUTABLE` 未定义时回退到硬编码 `/lib/qt${QT_VERSION_MAJOR}/bin/lrelease`（ninja 运行期 127）。`common.sh` 的 `_cmake` 统一预置 `-DQt5_LRELEASE_EXECUTABLE=/usr/bin/lrelease-qt5 -DQt6_LRELEASE_EXECUTABLE=$toolbin/lrelease`，回退分支永不触发。
 - **qdbusxml2cpp 后缀**：Fedora 只有 `qdbusxml2cpp-qt5`/`qdbusxml2cpp-qt6`，session-ui 的 `find_program(QDBUSXML2CPP qdbusxml2cpp)` 按名搜索 NOTFOUND（ninja 执行 `QDBUSXML2CPP-NOTFOUND` → 127）。`common.sh` 在 toolbin 建 `qdbusxml2cpp` 软链（默认 qt6），session-ui（Qt5 主工程）在自己的组脚本里翻转到 qt5 版。
-- **man 页与 brp-compress 竞态**：`split-files.py` 的清单在 `%install` 期生成，而 `brp-compress` 其后把 man 页改名 `.gz`，导致 `%files` 报"没有找到文件"（libs 组的 bernese doxygen man3 首触）。双修：模板统一 `%global __brp_compress %{nil}`（清单与 buildroot 永远一致）；libs 组删除 bernese 的 doxygen 自动生成 man 页（Fedora 指南不鼓励打包）。
+- **man 页与 brp-compress 竞态**：`split-files.py` 的清单在 `%install` 期生成，而 `brp-compress` 其后把 man 页改名 `.gz`，会导致 `%files` 清单失配；模板统一 `%global __brp_compress %{nil}`，让清单与 buildroot 保持一致。
 - **deepin-daemon 图标**：`install-icons` 目标用 Python 调 `rsvg-convert`，Fedora 由 `librsvg2-tools` 提供（不是 `librsvg-tools`），已加入 daemon 组 BuildRequires。
 - **gxde-terminal devel 面**：terminal 安装 `gxde-terminalwidget6` 的头文件、cmake 配置、pc 与 `.so` 开发符号链接，组清单须开 `devel=True`，否则 unpackaged files 报错。
 - **gxde-wallpapers image-blur**：blur 目标硬编码调用 `/usr/lib/deepin-api/image-blur`（deepin-api，Fedora 未打包；VM 曾装有该工具所以本地验证通过、干净 chroot Error 127）。artwork 组脚本在 `toolbin/` 放一个 ImageMagick stub（`magick IN -blur 0xSIGMA OUT`，参数签名与 deepin-api 一致）并 sed 改写 Makefile 硬编码路径走 PATH。BuildRequires 增加 `ImageMagick`。
@@ -61,7 +62,13 @@
 - **硬编码 Qt 工具路径**：多个模块的翻译脚本硬编码 Debian/Arch 路径（`/usr/lib/qt6/bin/lrelease`、`/usr/lib/x86_64-linux-gnu/qt6/bin/…` 等），Fedora 上不存在。`build.sh` 在构建前将所有 `.sh` 中的这些绝对路径统一 sed 到 `toolbin/` shim——脚本内 `[ -f … ]` 探测依然成立，且跟随模块 Qt 版本切换。这是对构建树内源码的就地修改（无独立补丁文件）。
 - **CMAKE_CXX_FLAGS 无条件覆盖**：gxde-dock、gxde-top-panel(-plugins)、gxde-launcher、gxde-control-center（dialogs/frame）在 CMakeLists 顶部 `set(CMAKE_CXX_FLAGS "-g -Wall")`，把 `%set_build_flags` 注入的 Fedora 硬化 flags（redhat-hardened-cc1 的 PIE、FORTIFY、annobin）全部清掉，导致对象文件非 PIC，PIE 链接报 `R_X86_64_32 ... recompile with -fPIE`（dock 的 mocs_compilation 首当其冲）。`build.sh` 构建前将此类无条件 `set` 统一 sed 为追加式 `set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} …")`；已是追加式的行（含 `$`）与注释行不受影响。同为构建树就地修改。
 - **gxde-network-utils-qt6（第 44 模块）**：gxde-dock / gxde-control-center / gxde-top-panel-plugins 通过 `pkg_check_modules(… REQUIRED gxde-network-utils-qt6)` 依赖该库；Arch 上是独立包（gxde/gxde-network-utils-qt6-git），Fedora 侧并入 bundle。上游 `.pro` 硬编码 `target.path = $$PREFIX/lib` 且 pc 的 libdir 在解析期展开，构建时传 `-after target.path=$libdir QMAKE_PKGCONFIG_LIBDIR=$libdir` 双双覆盖到 `/usr/lib64`。`libdframeworkdbus-qt6` 依赖由 `gxde-infra-devel` 提供（头文件路径 `/usr/include/libdframeworkdbus-qt6-6.0` 与 `.pro` 默认值一致）。
-- **gxde-bernese（第 45 模块）**：gxde-top-panel 与 gxde-control-center 通过 `find_package(GxdeBerneseQt6 [0.1.1] REQUIRED)` 依赖；Arch 上是独立包（gxde/gxde-bernese-git），Fedora 侧并入 bundle，在 dock 之前用 `_cmake` 构建进 stage（消费方经 `CMAKE_PREFIX_PATH=$stage/usr` 找到 config）。CMake 工程自带 `VERSION 0.1.1`，满足 control-center 的版本要求；依赖仅 Qt6 Core/Gui/Widgets、X11、xcb、xcb-randr，均在既有 BuildRequires 覆盖内。
+- **gxde-bernese 迁出 Core（2026-11-07）**：Bernese 与 GXTK7 现在由独立的
+  `charofstring/gxde-gxtk7` 项目提供；Core 不再捆绑其源码。top-panel、control-center、
+  file-manager 显式 BuildRequires `gxde-bernese-devel`，Core COPR 将新项目作为外部仓库。
+- **gxde-wallpaper-chooser（2026-11-07）**：以独立 `gxde-wallpaper-chooser` 功能包加入
+  Core，运行包依赖 file-manager/control-center，静态 `libgxde-wallpicker.a` 与头文件进入
+  `-devel` 子包。上游把该静态库安装到写死的 `/usr/lib`，组脚本在 x86_64/aarch64
+  将它移到 `%{_libdir}`；仅做安装树布局适配，没有源码补丁。
 - **file-manager Qt6 分支依赖**：`gxde-file-manager-lib` 的 `.pro` 在 Qt6 下用 `gsettings-qt6 / udisks2-qt6 / disomaster-qt6`（前两者及 disomaster-qt6 由 `gxde-infra-devel` 和 gsettings-qt6 COPR 包提供），Qt5-only 的 `Qt5Xdg / udisks2-qt5 / disomaster` 分支不会走到，无需打包 libqtxdg。`poppler-cpp`（pdf 预览插件）与 `polkit-agent-1`（file-manager-daemon）在 Fedora 由 `poppler-cpp-devel`、`polkit-devel` 提供，已用 `pkgconfig(…)` 形式加入 BuildRequires。
 - **CGo alsa 头**：vendored Go 绑定以 `<asoundlib.h>` 裸名引用，Fedora 头文件在 `/usr/include/alsa/` 下，`CGO_CPPFLAGS` 加 `-I/usr/include/alsa`（与 gxde-infra 修法一致）。
 - **zlib**：F44 运行时可能是 `zlib-ng-compat`，此时 `zlib-devel` 的 `libz.so` 软链悬空导致 `-lz` 链接失败；BuildRequires 改用 `pkgconfig(zlib)` 让 dnf 选择与运行时匹配的 devel 包。

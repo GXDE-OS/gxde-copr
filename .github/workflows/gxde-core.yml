@@ -102,7 +102,7 @@ jobs:
              gxde-session-ui gxde-app-management'
             'gxde-dock gxde-control-center'
             'gxde-top-panel gxde-file-manager'
-            'gxde-search'
+            'gxde-search gxde-wallpaper-chooser'
             'gxde-core'
           )
           for wave in "${waves[@]}"; do

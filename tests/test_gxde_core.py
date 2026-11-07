@@ -61,10 +61,12 @@ class Tags(unittest.TestCase):
         self.assertEqual(core.BRANCH['rofd'], 'main')
 
     def test_module_count_matches_aur_minus_shell_tools(self):
-        # AUR _mods has 43 entries plus gxde-network-utils-qt6/gxde-bernese;
-        # gxde-shell-tools (Arch packaging metadata only, no sources) is dropped.
+        # AUR _mods has 43 entries plus gxde-network-utils-qt6 and the new
+        # wallpaper chooser; gxde-shell-tools (packaging only) is dropped.
         self.assertEqual(len(core.MODULES), 44)
         self.assertEqual(len(set(core.MODULES)), 44)
+        self.assertNotIn('gxde-bernese', core.MODULES)
+        self.assertIn('gxde-wallpaper-chooser', core.MODULES)
 
     def test_meta_version_follows_control_center(self):
         self.assertEqual(core.META_NAME, 'gxde-core')
@@ -94,7 +96,7 @@ class Groups(unittest.TestCase):
         seen = [m for g in core.GROUPS.values() for m in g['modules']]
         self.assertEqual(len(seen), len(set(seen)), 'module in two groups')
         self.assertEqual(set(seen), set(core.MODULES))
-        self.assertEqual(len(core.GROUPS), 16)
+        self.assertEqual(len(core.GROUPS), 17)
 
     def test_version_from_in_group_and_script_exists(self):
         for name, group in core.GROUPS.items():
@@ -104,7 +106,7 @@ class Groups(unittest.TestCase):
     def test_lock_has_group_metadata(self):
         lock = json.loads((core.PACKAGE / 'upstream-lock.json').read_text())
         self.assertEqual(len(lock['components']), 44)
-        self.assertEqual(len(lock['groups']), 17)  # 16 groups + metapackage
+        self.assertEqual(len(lock['groups']), 18)  # 17 groups + metapackage
         for name, group in core.GROUPS.items():
             entry = lock['groups'][name]
             self.assertEqual(sorted(entry['commits']), sorted(group['modules']), name)
@@ -219,6 +221,19 @@ class Prepare(unittest.TestCase):
             for dep in ('lucene++-devel', 'gxde-app-management-devel',
                         'gxde-file-manager-devel'):
                 self.assertIn(dep, search, f'{dep} missing from gxde-search BuildRequires')
+        for group in ('gxde-top-panel', 'gxde-control-center', 'gxde-file-manager'):
+            with tempfile.TemporaryDirectory() as tmp:
+                _, generated = self._prepare(group, tmp)
+            self.assertIn('gxde-bernese-devel', generated, group)
+
+    def test_wallpaper_chooser_is_a_separate_core_package(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            _, generated = self._prepare('gxde-wallpaper-chooser', tmp)
+            build_sh = (Path(tmp) / 'SOURCES/build.sh').read_text()
+        self.assertIn('Requires:       gxde-file-manager gxde-control-center', generated)
+        self.assertIn('Provides:       gxde-wallpaper', generated)
+        self.assertIn('qt6-qtmultimedia-devel', generated)
+        self.assertIn('_cmake gxde-wallpaper-chooser', build_sh)
 
     def test_file_manager_strips_bogus_pc_requires(self):
         # util-dfm's dfm6-search.pc lists CMake target names (Boostsystem,

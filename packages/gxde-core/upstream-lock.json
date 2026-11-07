@@ -48,12 +48,6 @@
       "url": "https://codeload.github.com/GXDE-OS/gxde-network-utils-qt6/tar.gz/2d3ecd17b03e32db8013edc0d93139cb1ec3ac94",
       "sha256": "bf1cfa9fa06c3972c1652b0ed6ecdf4d9a3ac67c1a1ee3538bf964e386e61228"
     },
-    "gxde-bernese": {
-      "tag": "1.0.3-gxde5",
-      "commit": "078943398ddc9a30f2871031607cfd4d94df5731",
-      "url": "https://codeload.github.com/GXDE-OS/gxde-bernese/tar.gz/078943398ddc9a30f2871031607cfd4d94df5731",
-      "sha256": "9b355a1dfb9dcf820f5e05be95ad6c344781d573d9b34eb52fe6f80cbc481a91"
-    },
     "deepin-daemon": {
       "tag": "4.0.17",
       "commit": "9cda7cf89ed64cfc80176f5bed02c0e38c36c11c",
@@ -145,6 +139,12 @@
       "commit": "5c6bd2a9dcba47ad44c1b84fd9e890da23d289f5",
       "url": "https://codeload.github.com/GXDE-OS/gxde-control-center/tar.gz/5c6bd2a9dcba47ad44c1b84fd9e890da23d289f5",
       "sha256": "bdf8efcf3225f3a43b3529254685150ac3391e9e713d2c725f67db8a782c1cf5"
+    },
+    "gxde-wallpaper-chooser": {
+      "tag": "0.2.6",
+      "commit": "000d39fbf5afd3090783b42bd25f548d1d86a5be",
+      "url": "https://codeload.github.com/GXDE-OS/gxde-wallpaper-chooser/tar.gz/000d39fbf5afd3090783b42bd25f548d1d86a5be",
+      "sha256": "28c76eacd841b4369d30f551a7d502e9f42e9eaff21599df78d3db8f2c6b3fce"
     },
     "gxde-launcher": {
       "tag": "6.0.27",
@@ -286,10 +286,9 @@
     },
     "gxde-libs": {
       "version": "6.0.1.1",
-      "release": 2,
+      "release": 3,
       "commits": {
-        "gxde-network-utils-qt6": "2d3ecd17b03e32db8013edc0d93139cb1ec3ac94",
-        "gxde-bernese": "078943398ddc9a30f2871031607cfd4d94df5731"
+        "gxde-network-utils-qt6": "2d3ecd17b03e32db8013edc0d93139cb1ec3ac94"
       }
     },
     "gxde-daemon": {
@@ -335,6 +334,13 @@
       "release": 1,
       "commits": {
         "gxde-control-center": "5c6bd2a9dcba47ad44c1b84fd9e890da23d289f5"
+      }
+    },
+    "gxde-wallpaper-chooser": {
+      "version": "0.2.6",
+      "release": 2,
+      "commits": {
+        "gxde-wallpaper-chooser": "000d39fbf5afd3090783b42bd25f548d1d86a5be"
       }
     },
     "gxde-launcher": {
@@ -413,7 +419,7 @@
     },
     "gxde-core": {
       "version": "6.1.5",
-      "release": 1,
+      "release": 3,
       "commits": {}
     }
   }

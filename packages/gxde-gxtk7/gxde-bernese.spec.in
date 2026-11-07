@@ -1,0 +1,66 @@
+# Generated from upstream-lock.json; source changes are listed in PATCHES.md.
+%global source_tag @TAG@
+%global source_commit @COMMIT@
+%global __brp_compress %{nil}
+Name:           gxde-bernese
+Version:        @VERSION@
+Release:        @RELEASE@%{?dist}
+Summary:        GXDE public Qt compatibility library
+License:        GPL-3.0-or-later
+URL:            https://github.com/GXDE-OS/gxde-bernese
+Source0:        @URL@#/gxde-bernese-%{source_commit}.tar.gz
+Source1:        sources.sha256
+Source2:        split-files.py
+Source3:        upstream-lock.json
+ExclusiveArch:  x86_64 aarch64
+BuildRequires:  gcc-c++ cmake ninja-build pkgconf-pkg-config python3
+BuildRequires:  qt6-qtbase-devel qt6-qtbase-private-devel
+BuildRequires:  libX11-devel pkgconfig(xcb) pkgconfig(xcb-randr) wayland-devel
+Provides:       libgxde-bernese-qt6-0 = %{version}-%{release}
+
+%description
+GXDE Bernese replaces direct use of unstable Qt private APIs with a small
+compatibility library built on public Qt interfaces.
+
+%package devel
+Summary:        Development files for GXDE Bernese
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       qt6-qtbase-devel libX11-devel libxcb-devel wayland-devel
+Provides:       libgxde-bernese-qt6-devel = %{version}-%{release}
+
+%description devel
+Headers, pkg-config and CMake metadata for GXDE Bernese.
+
+%prep
+(cd %{_sourcedir} && sha256sum -c %{SOURCE1})
+%setup -q -c -T -a 0
+mv gxde-bernese-%{source_commit} upstream
+cp %{SOURCE3} upstream-lock.json
+
+%build
+%set_build_flags
+cmake -S upstream -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=%{_prefix} \
+    -DCMAKE_INSTALL_LIBDIR=%{_libdir} \
+    -DCMAKE_BUILD_TYPE=None \
+    -DBERNESE_QT_MAJOR_VERSION=6 \
+    -DBUILD_TESTING=OFF
+cmake --build build --parallel %{_smp_build_ncpus}
+
+%install
+DESTDIR=%{buildroot} cmake --install build
+rm -rf %{buildroot}%{_datadir}/doc/gxde-bernese
+python3 %{SOURCE2} %{buildroot} %{_libdir}
+
+%check
+test -f %{buildroot}%{_libdir}/cmake/GxdeBerneseQt6/GxdeBerneseQt6Config.cmake
+
+%files -f runtime.files
+%license upstream/LICENSE
+%doc upstream/README.md upstream-lock.json
+
+%files devel -f devel.files
+
+%changelog
+* Sat Nov 07 2026 CharOfString <root@charofstring.cc> - @VERSION@-@RELEASE@
+- Package the latest pinned GXDE Bernese release for Fedora 45

@@ -11,7 +11,7 @@ if [[ "$ID" != fedora || "$VERSION_ID" != 45 ]]; then
 fi
 cd /work
 dnf -y install rpm-build redhat-rpm-config dnf5-plugins python3 shadow-utils
-for project in gxde-dtk5 gxde-dtk2 gxde-dtk6 gxde-dtk2-qt6 gxde-infra; do
+for project in gxde-dtk5 gxde-dtk2 gxde-dtk6 gxde-dtk2-qt6 gxde-infra gxde-gxtk7; do
     dnf -y copr enable "charofstring/$project"
 done
 python3 scripts/gxde-core-sources.py prepare --group all
@@ -23,7 +23,7 @@ WAVES=(
      gxde-session-ui gxde-app-management'
     'gxde-dock gxde-control-center'
     'gxde-top-panel gxde-file-manager'
-    'gxde-search'
+    'gxde-search gxde-wallpaper-chooser'
     'gxde-core'
 )
 for wave in "${WAVES[@]}"; do

@@ -13,6 +13,7 @@ Requires:       gxde-dock gxde-top-panel gxde-control-center gxde-launcher
 Requires:       gxde-session-ui gxde-file-manager gxde-terminal gxde-search
 Requires:       gxde-screensaver gxde-compressor gxde-installer
 Requires:       gxde-app-management
+Requires:       gxde-wallpaper-chooser
 Recommends:     lightdm accountsservice gxde-display-manager flakewm
 
 %description
@@ -20,7 +21,7 @@ Metapackage for the GXDE OS desktop core components, split into
 purpose-based packages: artwork/themes, internal libraries, session
 daemons, polkit agent, dock, top panel, control center, launcher,
 session UI, file manager, terminal, search, screensaver, compressor,
-installer translations and app management. Mirrors the Arch
+installer translations, app management and the wallpaper chooser. Mirrors the Arch
 gxde-core-git package set.
 
 # Empty metapackage; rpm6 silently produces no binary RPM without a %files

@@ -6,7 +6,7 @@ Branch-pinned modules (matching AUR's _branch map) use git describe on the
 pinned branch to find the latest reachable tag — the same semantics as AUR's
 prepare().  Other modules use the highest numeric tag across all refs.
 
-The historical single gxde-core bundle was split (2026-10-20) into 16
+The historical single gxde-core bundle was split (2026-10-20) into 17
 purpose-based packages plus a metapackage, all built under the single COPR
 project charofstring/gxde-core.  One shared upstream-lock.json pins every
 module; each group derives its own version (from its primary module's tag)
@@ -172,13 +172,12 @@ GROUPS = {
         'scriptlets': '',
     },
     'gxde-libs': {
-        'modules': ('gxde-network-utils-qt6', 'gxde-bernese'),
+        'modules': ('gxde-network-utils-qt6',),
         'version_from': 'gxde-network-utils-qt6',
-        'summary': 'GXDE internal shared libraries (network utils, bernese)',
-        'description': 'Internal shared libraries of the GXDE desktop:\n'
-                       'gxde-network-utils-qt6 (network device/model/worker library used\n'
-                       'by the dock, panels and control center) and gxde-bernese (Qt6\n'
-                       'compatibility helpers using public Qt APIs).',
+        'summary': 'GXDE internal network utility library',
+        'description': 'The gxde-network-utils-qt6 network device, model and worker\n'
+                       'library used by the dock, panels and control center. GXDE\n'
+                       'Bernese is packaged separately in charofstring/gxde-gxtk7.',
         'br': BASE + QT6 + DTK + X11 + ['gsettings-qt6-devel'],
         'devel': True, 'tools': (), 'debug_package': True,
         'requires': [], 'provides': [], 'conflicts': [], 'scriptlets': '',
@@ -254,7 +253,7 @@ GROUPS = {
         'br': BASE + QT6 + DTK + X11 + [
             'gsettings-qt6-devel layer-shell-qt-devel libdbusmenu-lxqt-devel',
             'kf6-kwindowsystem-devel libxdo-devel',
-            'gxde-libs-devel gxde-dock-devel',
+            'gxde-libs-devel gxde-dock-devel gxde-bernese-devel',
         ],
         'devel': True, 'tools': (), 'debug_package': True,
         'requires': [], 'provides': [], 'conflicts': [], 'scriptlets': '',
@@ -273,10 +272,23 @@ GROUPS = {
             'kf6-kstatusnotifieritem-devel kf6-kcodecs-devel',
             'kf6-networkmanager-qt-devel libdbusmenu-lxqt-devel layer-shell-qt-devel',
             'lightdm-qt5-devel lightdm-qt6-devel gtest-devel',
-            'gxde-libs-devel libudisks2-devel libwebp-devel file-devel',
+            'gxde-libs-devel gxde-bernese-devel libudisks2-devel libwebp-devel file-devel',
         ],
         'devel': False, 'tools': (), 'debug_package': True,
         'requires': [], 'provides': [], 'conflicts': [], 'scriptlets': '',
+    },
+    'gxde-wallpaper-chooser': {
+        'modules': ('gxde-wallpaper-chooser',),
+        'version_from': 'gxde-wallpaper-chooser',
+        'summary': 'GXDE wallpaper and screensaver chooser',
+        'description': 'The GXDE wallpaper, lock-screen wallpaper and screensaver\n'
+                       'chooser, including the embeddable wallpicker development library.',
+        'br': BASE + QT6 + DTK + [
+            'qt6-qtmultimedia-devel gsettings-qt6-devel',
+        ],
+        'devel': True, 'tools': (), 'debug_package': True,
+        'requires': ['gxde-file-manager gxde-control-center'],
+        'provides': ['gxde-wallpaper'], 'conflicts': [], 'scriptlets': '',
     },
     'gxde-launcher': {
         'modules': ('gxde-launcher',),
@@ -332,7 +344,7 @@ GROUPS = {
             'libisoburn-devel file-devel utf8proc-devel libwebp-devel pkgconfig(zlib)',
             # dfm6-search.pc Requires Boost; dfm6-mount.pc Requires libsecret-1.
             'boost-devel libsecret-devel',
-            'gxde-dock-devel gxde-libs-devel',
+            'gxde-dock-devel gxde-libs-devel gxde-bernese-devel',
             # rofd.h / librofd_ffi for the OFD thumbnail and preview plugins.
             'gxde-compressor-devel',
             'perl-interpreter perl-XML-LibXML perl-Config-Tiny',
