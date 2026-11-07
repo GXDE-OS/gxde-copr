@@ -2,6 +2,17 @@
 
 当前新增源码补丁：**1 项**。
 
+## Deepin Qt 平台主题限定到 GXDE 会话（Release 3）
+
+- 上游 `/etc/profile.d/gxde.sh` 无条件导出 `QT_QPA_PLATFORMTHEME=deepin`，导致只要
+  安装了 `gxde-infra`，Plasma/KDE 会话中的所有 Qt 程序也会加载 Deepin 平台主题，
+  覆盖 Plasma 自己的配色、控件和图标设置。
+- RPM 安装阶段将该导出改为按会话判断：仅 `XDG_CURRENT_DESKTOP`、
+  `XDG_SESSION_DESKTOP` 或 `DESKTOP_SESSION` 表明 GXDE/Deepin 时启用。GXDM 会在
+  打开 PAM 会话前设置这些变量，因此 GXDE 与 FlakeWM 仍使用 Deepin 主题，KDE
+  和其他桌面不会被影响。
+- 这是安装配置适配，**没有新增上游源码 patch**。
+
 ## Fedora 全局 Qt 平台变量修正（Release 2）
 
 - `gxde-desktop-base 2026.11.03` 安装的 `/etc/profile.d/gxde.sh` 全局设置
@@ -10,7 +21,8 @@
   XCB；Plasma Login Manager 的 greeter/wallpaper 随即在 `libQt6XcbQpa` 中段错误，
   GXDM 也无法稳定显示 greeter。
 - RPM 在 `%install` 的 buildroot 中删除这一项，让 Qt 根据会话自动选择平台；
-  `QT_QPA_PLATFORMTHEME`、`DTK2_XWAYLAND` 等其他 GXDE 设置不变。
+  `DTK2_XWAYLAND` 等其他 GXDE 设置不变。`QT_QPA_PLATFORMTHEME` 后续在 Release 3
+  改为仅 GXDE 会话启用。
 - 这是安装配置适配，**没有新增上游源码 patch**。已在 Fedora 45 测试机分别验证
   Plasma Login Manager 和 `GXDM + FlakeWM + gxdm-greeter-neo` 正常运行。
 

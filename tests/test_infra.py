@@ -60,6 +60,9 @@ class Infra(unittest.TestCase):
             self.assertIn('Source24:       gxde-k9.tmpfiles.conf', spec)
             self.assertIn("sed -i '/^export .*QT_QPA_PLATFORM=/d'", spec)
             self.assertIn("! grep -Eq '^export .*QT_QPA_PLATFORM='", spec)
+            self.assertIn("XDG_CURRENT_DESKTOP=KDE", spec)
+            self.assertIn("XDG_CURRENT_DESKTOP=GXDE", spec)
+            self.assertIn("*:GXDE:*|*:Deepin:*|*:deepin:*|*:gxde-flakewm:*)", spec)
 
 
 if __name__ == '__main__':

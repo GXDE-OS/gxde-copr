@@ -116,6 +116,17 @@ make -C gxde-desktop-base install DESTDIR=%{buildroot} GXDE_CODENAME=zhuangzhuan
 # makes both Plasma Login Manager and GXDM select XCB without a DISPLAY.
 sed -i '/^export .*QT_QPA_PLATFORM=/d' \
     %{buildroot}%{_sysconfdir}/profile.d/gxde.sh
+# The upstream profile enables the Deepin Qt platform theme for every login
+# shell.  Keep it for GXDE sessions, but do not override KDE/Plasma (or any
+# other desktop) merely because gxde-infra is installed.
+sed -i \
+    '/^export QT_QPA_PLATFORMTHEME=deepin$/c\
+case ":${XDG_CURRENT_DESKTOP:-}:${XDG_SESSION_DESKTOP:-}:${DESKTOP_SESSION:-}:" in\
+    *:GXDE:*|*:Deepin:*|*:deepin:*|*:gxde-flakewm:*)\
+        export QT_QPA_PLATFORMTHEME=deepin\
+        ;;\
+esac' \
+    %{buildroot}%{_sysconfdir}/profile.d/gxde.sh
 rm -rf %{buildroot}/etc/apt %{buildroot}/etc/default/grub.d \
        %{buildroot}/etc/sudoers.d %{buildroot}/etc/systemd \
        %{buildroot}/usr/share/python-apt %{buildroot}/usr/share/distro-info \
@@ -139,6 +150,14 @@ if grep -R -l -F "$PWD/stage" %{buildroot}%{_libdir}/pkgconfig %{buildroot}%{_li
     exit 1
 fi
 ! grep -Eq '^export .*QT_QPA_PLATFORM=' \
+    %{buildroot}%{_sysconfdir}/profile.d/gxde.sh
+! grep -qx 'export QT_QPA_PLATFORMTHEME=deepin' \
+    %{buildroot}%{_sysconfdir}/profile.d/gxde.sh
+env -i HOME=/tmp PATH=/usr/bin XDG_CURRENT_DESKTOP=KDE \
+    bash -c '. "$1"; test -z "${QT_QPA_PLATFORMTHEME+x}"' -- \
+    %{buildroot}%{_sysconfdir}/profile.d/gxde.sh
+env -i HOME=/tmp PATH=/usr/bin XDG_CURRENT_DESKTOP=GXDE \
+    bash -c '. "$1"; test "$QT_QPA_PLATFORMTHEME" = deepin' -- \
     %{buildroot}%{_sysconfdir}/profile.d/gxde.sh
 
 %files -f runtime.files
