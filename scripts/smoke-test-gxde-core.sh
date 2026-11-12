@@ -7,7 +7,8 @@ set -euo pipefail
 # there is no "gxde-session" on Arch either.
 for executable in startgxde deepin-session deepin-menu gxde-control-center \
                   gxde-launcher gxde-dock gxde-terminal gxde-top-panel rofd \
-                  gxde-app-installer gxde-requ gxde-wallpaper-chooser; do
+                  gxde-app-installer gxde-requ gxde-wallpaper-chooser \
+                  gxde-lock-classic gxde-lock-neo; do
     command -v "$executable" >/dev/null
 done
 
@@ -39,6 +40,12 @@ ls /usr/share/glib-2.0/schemas/ | grep -q deepin
 # flakewm package, not here.
 test -f /usr/share/xsessions/deepin.desktop
 
+# The locker is installed as a core component, but its XDG autostart must be
+# limited to GXDE/startgxde rather than leaking into Plasma or GNOME.
+test -x /usr/libexec/gxde-lock-guard
+grep -Fqx 'OnlyShowIn=GXDE;Deepin;' /etc/xdg/autostart/gxde-lock.desktop
+! grep -Eq '^OnlyShowIn=.*(KDE|GNOME)' /etc/xdg/autostart/gxde-lock.desktop
+
 # Polkit
 test -d /usr/share/polkit-1/actions
 
@@ -63,8 +70,8 @@ python3 - <<'PY'
 import json
 from pathlib import Path
 lock = json.loads(Path('/usr/share/doc/gxde-artwork/upstream-lock.json').read_text())
-assert len(lock['components']) == 44, len(lock['components'])
-assert len(lock['groups']) == 18, len(lock['groups'])
+assert len(lock['components']) == 45, len(lock['components'])
+assert len(lock['groups']) == 19, len(lock['groups'])
 # Branch-pinned modules must record their branch.
 for name in ('gxde-sni-server', 'gxde-top-panel-plugins', 'gxde-file-manager',
              'gxde-terminal', 'rofd'):

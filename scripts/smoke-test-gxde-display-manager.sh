@@ -8,6 +8,7 @@ done
 
 # gxdm helper in libexec
 test -x /usr/lib/gxdm/gxdm-helper || test -x /usr/libexec/gxdm/gxdm-helper
+test -x /usr/lib/gxdm/gxdm-settings-agent
 
 # PAM files (Fedora-specific, not upstream Arch-style)
 for pam in gxdm gxdm-autologin gxdm-greeter gxdm-rescue; do
@@ -26,14 +27,18 @@ test -d /usr/share/gxdm/themes || test -d /usr/share/gxdm/translations-qt6
 
 # DBus
 test -d /usr/share/dbus-1/system.d
+grep -Fqx 'Exec=/usr/lib/gxdm/gxdm-settings-agent' \
+    /usr/share/dbus-1/services/top.gxde.DisplayManager.service
+
+# The in-session locker is a separate package from GXDM since 1.3.7.
+test ! -e /etc/xdg/autostart/gxdm-lock-classic.desktop
 
 # Lock file
 python3 - <<'PY'
 import json
 from pathlib import Path
 lock = json.loads(Path('/usr/share/doc/gxde-display-manager/upstream-lock.json').read_text())
-assert len(lock['components']) == 3  # 2 modules + MavenPro-OFL
-assert lock['components']['gxde-display-manager']['tag'] == '1.3.2-gxde2'
+assert len(lock['components']) == 2
+assert lock['components']['gxde-display-manager']['tag'] == '1.3.7-gxde1'
 assert lock['components']['gxdm-emergency-mode']['tag'] == '1.0.0-gxde2'
-assert lock['components']['MavenPro-OFL']['commit'] == '1c21ee500b7b87a4871696519fc84107a1a001df'
 PY

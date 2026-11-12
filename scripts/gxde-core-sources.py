@@ -6,7 +6,7 @@ Branch-pinned modules (matching AUR's _branch map) use git describe on the
 pinned branch to find the latest reachable tag — the same semantics as AUR's
 prepare().  Other modules use the highest numeric tag across all refs.
 
-The historical single gxde-core bundle was split (2026-10-20) into 17
+The historical single gxde-core bundle was split (2026-10-20) into 18
 purpose-based packages plus a metapackage, all built under the single COPR
 project charofstring/gxde-core.  One shared upstream-lock.json pins every
 module; each group derives its own version (from its primary module's tag)
@@ -318,6 +318,24 @@ GROUPS = {
         'devel': False, 'tools': ('desktop',), 'debug_package': True,
         'requires': [], 'provides': [],
         'conflicts': ['deepin-session-ui deepin-session-shell'], 'scriptlets': '',
+    },
+    'gxde-lock': {
+        'modules': ('gxde-lock',),
+        'version_from': 'gxde-lock',
+        'summary': 'GXDE lock screen for X11 and Wayland',
+        'description': 'The GXDE in-session lock screen: classic DTK and modern Qt Quick\n'
+                       'frontends, crash-restarting guard, PAM authentication helpers and\n'
+                       'X11/Wayland session-lock integration.',
+        'br': BASE + QT6 + DTK + X11 + [
+            'pam-devel systemd-devel gsettings-qt6-devel layer-shell-qt-devel',
+            'wayland-protocols-devel qt6-qtvirtualkeyboard-devel',
+        ],
+        'devel': False, 'tools': (), 'debug_package': True,
+        'requires': [
+            'accountsservice dbus layer-shell-qt gsettings-qt6',
+            'qt6-qtdeclarative qt6-qtvirtualkeyboard',
+        ],
+        'provides': [], 'conflicts': [], 'scriptlets': '',
     },
     'gxde-file-manager': {
         'modules': ('gxde-file-manager', 'gxde-file-manager-integration', 'util-dfm'),

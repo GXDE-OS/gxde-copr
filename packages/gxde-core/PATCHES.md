@@ -4,7 +4,7 @@
 
 ## 拆分结构（2026-10-20 起）
 
-历史单包 bundle 已按用途拆分为 **17 个功能包 + 1 个元包**，
+历史单包 bundle 已按用途拆分为 **18 个功能包 + 1 个元包**，
 全部在 COPR 单项目 `charofstring/gxde-core` 下以多 package 形式构建（用户只需 enable 一个 repo）。
 
 - 生成器：`scripts/gxde-core-sources.py` 内的 `GROUPS` 清单驱动；`update` 解析全部模块写入共享
@@ -21,7 +21,7 @@
   compressor（rofd.h/FFI）、app-management（deepin-qdbus-service，被 search 消费）、
   wallpaper-chooser（libgxde-wallpicker 静态库与头文件）。
 - 包间构建依赖（波次）：W1 artwork/libs/daemon/polkit-agent/installer/screensaver/terminal/
-  compressor/launcher/session-ui/app-management → W2 dock/control-center →
+  compressor/launcher/session-ui/lock/app-management → W2 dock/control-center →
   W3 top-panel/file-manager → W4 search/wallpaper-chooser → W5 元包。
   search 在 W4：grand-search 除 `deepin-qdbus-service`（app-management devel）外还
   `find_package(dfm6-search)`，该 cmake 配置由 util-dfm 安装（file-manager 组 devel）。
@@ -32,6 +32,13 @@
 ## 构建适配（非源码补丁）
 
 以下调整均通过构建参数或环境变量实现，不修改上游源码：
+
+- **gxde-lock（2026-11-11）**：新增独立 `gxde-lock` 功能包，锁定正式标签
+  `2.0.0-gxde3`。上游 `/etc/xdg/autostart/gxde-lock.desktop` 未限定桌面，RPM
+  安装阶段增加 `OnlyShowIn=GXDE;Deepin;`；`Deepin` 必须保留，因为 GXDE 的
+  `startgxde` 在执行 XDG autostart 前会将 `XDG_CURRENT_DESKTOP` 设置为该值。
+  Plasma、GNOME 等其他会话不会启动 guard。这是安装树适配，**没有新增上游源码
+  patch**。`gxde3` 同时加入与 GXDM `1.3.7` 设置代理的壁纸同步兼容。
 
 - **rofd (Rust)**：`qttypes` proc-macro 的 cpp crate 在 LTO-thin 对象中读不到结构体元数据，`--remap-path-prefix` 会破坏其基于路径的宏匹配。构建时从 `RUSTFLAGS` 去除 `--remap-path-prefix`，从 `CFLAGS`/`CXXFLAGS` 去除 `-flto` 和 `-ffat-lto-objects`，与 AUR 一致。
 - **rofd**：使用 `cargo build --offline --locked`，要求 SRPM 中包含完整的 vendor 依赖。Fedora COPR 构建环境无网络。

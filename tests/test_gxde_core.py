@@ -61,12 +61,14 @@ class Tags(unittest.TestCase):
         self.assertEqual(core.BRANCH['rofd'], 'main')
 
     def test_module_count_matches_aur_minus_shell_tools(self):
-        # AUR _mods has 43 entries plus gxde-network-utils-qt6 and the new
-        # wallpaper chooser; gxde-shell-tools (packaging only) is dropped.
-        self.assertEqual(len(core.MODULES), 44)
-        self.assertEqual(len(set(core.MODULES)), 44)
+        # AUR _mods has 43 entries plus gxde-network-utils-qt6, wallpaper
+        # chooser and the separately released lock screen; gxde-shell-tools
+        # (packaging only) is dropped.
+        self.assertEqual(len(core.MODULES), 45)
+        self.assertEqual(len(set(core.MODULES)), 45)
         self.assertNotIn('gxde-bernese', core.MODULES)
         self.assertIn('gxde-wallpaper-chooser', core.MODULES)
+        self.assertIn('gxde-lock', core.MODULES)
 
     def test_meta_version_follows_control_center(self):
         self.assertEqual(core.META_NAME, 'gxde-core')
@@ -96,7 +98,7 @@ class Groups(unittest.TestCase):
         seen = [m for g in core.GROUPS.values() for m in g['modules']]
         self.assertEqual(len(seen), len(set(seen)), 'module in two groups')
         self.assertEqual(set(seen), set(core.MODULES))
-        self.assertEqual(len(core.GROUPS), 17)
+        self.assertEqual(len(core.GROUPS), 18)
 
     def test_version_from_in_group_and_script_exists(self):
         for name, group in core.GROUPS.items():
@@ -105,8 +107,8 @@ class Groups(unittest.TestCase):
 
     def test_lock_has_group_metadata(self):
         lock = json.loads((core.PACKAGE / 'upstream-lock.json').read_text())
-        self.assertEqual(len(lock['components']), 44)
-        self.assertEqual(len(lock['groups']), 18)  # 17 groups + metapackage
+        self.assertEqual(len(lock['components']), 45)
+        self.assertEqual(len(lock['groups']), 19)  # 18 groups + metapackage
         for name, group in core.GROUPS.items():
             entry = lock['groups'][name]
             self.assertEqual(sorted(entry['commits']), sorted(group['modules']), name)
@@ -234,6 +236,18 @@ class Prepare(unittest.TestCase):
         self.assertIn('Provides:       gxde-wallpaper', generated)
         self.assertIn('qt6-qtmultimedia-devel', generated)
         self.assertIn('_cmake gxde-wallpaper-chooser', build_sh)
+
+    def test_lock_is_core_and_autostarts_only_in_gxde(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            _, generated = self._prepare('gxde-lock', tmp)
+            build_sh = (Path(tmp) / 'SOURCES/build.sh').read_text()
+        for dep in ('gxde-dtk2-qt6-devel', 'layer-shell-qt-devel',
+                    'wayland-protocols-devel', 'qt6-qtvirtualkeyboard-devel'):
+            self.assertIn(dep, generated)
+        self.assertIn('Requires:       qt6-qtdeclarative qt6-qtvirtualkeyboard', generated)
+        self.assertIn('_cmake gxde-lock', build_sh)
+        self.assertIn('OnlyShowIn=GXDE;Deepin;', build_sh)
+        self.assertNotIn('OnlyShowIn=KDE', build_sh)
 
     def test_file_manager_strips_bogus_pc_requires(self):
         # util-dfm's dfm6-search.pc lists CMake target names (Boostsystem,

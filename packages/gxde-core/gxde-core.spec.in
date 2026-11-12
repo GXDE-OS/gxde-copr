@@ -11,6 +11,7 @@ BuildArch:      noarch
 Requires:       gxde-artwork gxde-libs gxde-daemon gxde-polkit-agent
 Requires:       gxde-dock gxde-top-panel gxde-control-center gxde-launcher
 Requires:       gxde-session-ui gxde-file-manager gxde-terminal gxde-search
+Requires:       gxde-lock
 Requires:       gxde-screensaver gxde-compressor gxde-installer
 Requires:       gxde-app-management
 Requires:       gxde-wallpaper-chooser
@@ -20,7 +21,7 @@ Recommends:     lightdm accountsservice gxde-display-manager flakewm
 Metapackage for the GXDE OS desktop core components, split into
 purpose-based packages: artwork/themes, internal libraries, session
 daemons, polkit agent, dock, top panel, control center, launcher,
-session UI, file manager, terminal, search, screensaver, compressor,
+session UI, lock screen, file manager, terminal, search, screensaver, compressor,
 installer translations, app management and the wallpaper chooser. Mirrors the Arch
 gxde-core-git package set.
 

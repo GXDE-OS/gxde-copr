@@ -6,7 +6,7 @@ Name:           gxde-display-manager
 Version:        @VERSION@
 Release:        @RELEASE@%{?dist}
 Summary:        GXDE Display Manager, a fork of SDDM maintained by GXDE OS
-License:        GPL-3.0-or-later AND MIT AND OFL-1.1
+License:        GPL-3.0-or-later AND GPL-2.0-or-later AND MIT AND CC-BY-3.0 AND CC-BY-4.0 AND CC-BY-SA-3.0 AND Apache-2.0
 URL:            https://github.com/GXDE-OS/gxde-display-manager
 @SOURCES@
 Source100:      build.sh
@@ -30,18 +30,15 @@ BuildRequires:  python3-docutils
 BuildRequires:  pam-devel
 BuildRequires:  qt6-qtbase-devel qt6-qtbase-private-devel qt6-qttools-devel
 BuildRequires:  qt6-qtdeclarative-devel qt6-qtsvg-devel qt6-qtwayland-devel
-BuildRequires:  wayland-protocols-devel
 BuildRequires:  pkgconfig(x11) pkgconfig(xau) pkgconfig(xcb)
 BuildRequires:  xcb-util-wm-devel xcb-util-image-devel
 BuildRequires:  pkgconfig(xcursor) pkgconfig(xfixes) pkgconfig(xi)
 BuildRequires:  pkgconfig(xrandr) pkgconfig(xscrnsaver) pkgconfig(xtst)
 BuildRequires:  pkgconfig(xkbcommon)
-BuildRequires:  wayland-devel
 BuildRequires:  systemd-devel
 BuildRequires:  dbus-devel
 BuildRequires:  gxde-dtk6-devel gxde-dtk2-qt6-devel
 BuildRequires:  gsettings-qt6-devel
-BuildRequires:  layer-shell-qt-devel
 
 Requires:       gxde-dtk6 gxde-dtk2-qt6 gsettings-qt6
 Requires:       pam systemd-libs dbus kbd
@@ -51,6 +48,7 @@ Requires:       %{name}-selinux = %{version}-%{release}
 
 Recommends:     flakewm
 Recommends:     accountsservice
+Recommends:     gxde-lock
 
 Provides:       gxdm
 Conflicts:      gxdm
@@ -83,7 +81,6 @@ pushd gxde-display-manager
 popd
 # Extract vendored Rust crates into the emergency-mode tree.
 tar xf %{SOURCE2} -C gxdm-emergency-mode
-cp %{SOURCE3} MavenPro-OFL.txt
 cp %{SOURCE14} gxdm.te
 cp %{SOURCE15} gxdm.fc
 cp %{SOURCE103} upstream-lock.json
@@ -118,10 +115,6 @@ install -Dpm 644 %{SOURCE11} %{buildroot}%{_sysconfdir}/pam.d/gxdm-autologin
 install -Dpm 644 %{SOURCE12} %{buildroot}%{_sysconfdir}/pam.d/gxdm-greeter
 install -Dpm 644 %{SOURCE13} %{buildroot}%{_sysconfdir}/pam.d/gxdm-rescue
 
-# MavenPro OFL license (font license reference, not packaged font data).
-install -Dm 644 MavenPro-OFL.txt \
-    %{buildroot}%{_defaultlicensedir}/gxde-display-manager/OFL-MavenPro.txt
-
 find %{buildroot} -type f -name '*.la' -delete
 install -Dpm 644 %{modulename}.pp.bz2 \
     %{buildroot}%{_datadir}/selinux/packages/%{modulename}.pp.bz2
@@ -136,6 +129,12 @@ grep -Fqx 'Conflicts=getty@tty1.service kmsconvt@tty1.service' \
     %{buildroot}%{_unitdir}/gxdm.service
 grep -Fqx 'After=systemd-user-sessions.service getty@tty1.service kmsconvt@tty1.service plymouth-quit.service systemd-logind.service' \
     %{buildroot}%{_unitdir}/gxdm.service
+grep -Fqx 'ExecStartPre=-/usr/bin/systemctl stop kmsconvt@tty*.service' \
+    %{buildroot}%{_unitdir}/gxdm.service
+test ! -e %{buildroot}%{_sysconfdir}/xdg/autostart/gxdm-lock-classic.desktop
+test -x %{buildroot}%{_prefix}/lib/gxdm/gxdm-settings-agent
+grep -Fqx 'Exec=%{_prefix}/lib/gxdm/gxdm-settings-agent' \
+    %{buildroot}%{_datadir}/dbus-1/services/top.gxde.DisplayManager.service
 
 %files -f runtime.files
 %license licenses/

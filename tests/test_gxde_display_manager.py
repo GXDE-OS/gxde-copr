@@ -42,21 +42,12 @@ class Tags(unittest.TestCase):
     def test_module_count(self):
         self.assertEqual(len(gxdm.sources.MODULES), 2)
 
-    def test_mavenpro_commit_fixed(self):
-        self.assertEqual(gxdm.MAVENPRO_COMMIT,
-                         '1c21ee500b7b87a4871696519fc84107a1a001df')
-        self.assertEqual(gxdm.MAVENPRO_SHA256,
-                         'e0cde1a4993ed689d463d5e2401f4a60c54cc48a14253ab0f8012d722c417038')
-
-
 class Prepare(unittest.TestCase):
-    def test_lock_has_three_components(self):
+    def test_lock_has_two_components(self):
         lock = json.loads((gxdm.sources.PACKAGE / 'upstream-lock.json').read_text())
-        self.assertEqual(len(lock['components']), 3)
-        self.assertEqual(lock['components']['gxde-display-manager']['tag'], '1.3.6-gxde6')
+        self.assertEqual(len(lock['components']), 2)
+        self.assertEqual(lock['components']['gxde-display-manager']['tag'], '1.3.7-gxde1')
         self.assertEqual(lock['components']['gxdm-emergency-mode']['tag'], '1.0.0-gxde2')
-        self.assertEqual(lock['components']['MavenPro-OFL']['commit'],
-                         '1c21ee500b7b87a4871696519fc84107a1a001df')
 
     def test_prepared_spec_has_fedora_pam_sources(self):
         lock = json.loads((gxdm.sources.PACKAGE / 'upstream-lock.json').read_text())
@@ -87,11 +78,12 @@ class Prepare(unittest.TestCase):
             gxdm.prepare(lock, Path(tmp))
             spec = (Path(tmp) / 'SPECS/gxde-display-manager.spec').read_text()
             self.assertIn(f'Version:        {lock["version"]}', spec)
-            # Two module sources + vendor tarball + MavenPro OFL.
+            # Two module sources plus the emergency-mode vendor tarball.
             for i in range(2):
                 self.assertIn(f'Source{i}:', spec)
             self.assertIn('Source2: gxdm-emergency-mode-vendor.tar.gz', spec)
-            self.assertIn('Source3: MavenPro-OFL.txt', spec)
+            self.assertNotIn('Source3:', spec)
+            self.assertIn('Recommends:     gxde-lock', spec)
             # Fedora PAM files.
             for pam in ('gxdm.pam', 'gxdm-autologin.pam',
                         'gxdm-greeter.pam', 'gxdm-rescue.pam'):
@@ -107,6 +99,9 @@ class Prepare(unittest.TestCase):
             self.assertTrue((Path(tmp) / 'SOURCES/gxdm.fc').exists())
             self.assertTrue((Path(tmp) / 'SOURCES/0001-systemd-conflict-with-kmscon-vt.patch').exists())
             self.assertIn('kmsconvt@tty1.service', spec)
+            self.assertIn('ExecStartPre=-/usr/bin/systemctl stop kmsconvt@tty*.service', spec)
+            self.assertIn('test ! -e %{buildroot}%{_sysconfdir}/xdg/autostart/gxdm-lock-classic.desktop', spec)
+            self.assertIn('gxdm-settings-agent', spec)
             # PAM install disabled in cmake (build.sh, not spec).
             build_sh = (gxdm.sources.PACKAGE / 'build.sh').read_text()
             self.assertIn('INSTALL_PAM_CONFIGURATION=OFF', build_sh)

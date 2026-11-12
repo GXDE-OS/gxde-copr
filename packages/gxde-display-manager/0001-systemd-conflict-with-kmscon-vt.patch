@@ -1,5 +1,5 @@
 diff --git a/services/gxdm.service.in b/services/gxdm.service.in
-index 219a8fb..5215100 100644
+index 219a8fb..0b0dfd7 100644
 --- a/services/gxdm.service.in
 +++ b/services/gxdm.service.in
 @@ -1,8 +1,8 @@
@@ -13,3 +13,8 @@ index 219a8fb..5215100 100644
  PartOf=graphical.target
  StartLimitIntervalSec=30
  StartLimitBurst=2
+@@ -10,3 +10,4 @@
+ [Service]
++ExecStartPre=-/usr/bin/systemctl stop kmsconvt@tty*.service
+ ExecStart=@CMAKE_INSTALL_FULL_BINDIR@/gxdm
+ Restart=always

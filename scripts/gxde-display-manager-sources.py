@@ -25,12 +25,6 @@ sources.DEFAULT_OUTPUT = sources.ROOT / 'build/gxdm-rpmbuild'
 
 TAG = re.compile(r'v?(\d+(?:\.\d+)*)(?:-?gxde(\d+))?$')
 
-# MavenPro OFL license — fixed commit matching AUR.
-MAVENPRO_COMMIT = '1c21ee500b7b87a4871696519fc84107a1a001df'
-MAVENPRO_SHA256 = 'e0cde1a4993ed689d463d5e2401f4a60c54cc48a14253ab0f8012d722c417038'
-MAVENPRO_URL = f'https://raw.githubusercontent.com/googlefonts/mavenproFont/{MAVENPRO_COMMIT}/OFL.txt'
-
-
 def tag_key(tag):
     match = TAG.fullmatch(tag)
     if not match:
@@ -81,13 +75,6 @@ def resolve(old, cache):
                                           previous['sha256'] if previous and previous['commit'] == commit else None)
         components[name] = item
         print(f'{name}: {tag} ({commit[:12]})', flush=True)
-    # MavenPro OFL license (static commit, not a git tag)
-    components['MavenPro-OFL'] = {
-        'tag': f'commit:{MAVENPRO_COMMIT[:12]}',
-        'commit': MAVENPRO_COMMIT,
-        'url': MAVENPRO_URL,
-        'sha256': sources.download(MAVENPRO_URL, cache / f'MavenPro-OFL-{MAVENPRO_COMMIT}.txt', MAVENPRO_SHA256),
-    }
     version = rpm_version(components[sources.CORE_MODULE]['tag'])
     changed = components != old.get('components')
     release = old.get('release', 0) + int(changed) if version == old.get('version') else 1
@@ -168,14 +155,6 @@ def prepare(lock, destination):
     shutil.copyfile(emergency_tarball, destination / 'SOURCES' / 'gxdm-emergency-mode-vendor.tar.gz')
     sources_list.append(f'Source2: gxdm-emergency-mode-vendor.tar.gz')
     checks.append(f'{vendor_sha}  gxdm-emergency-mode-vendor.tar.gz')
-
-    # Source3: MavenPro OFL license
-    maven = lock['components']['MavenPro-OFL']
-    maven_file = destination / 'SOURCES' / f'MavenPro-OFL-{MAVENPRO_COMMIT}.txt'
-    sources.download(maven['url'], maven_file, maven['sha256'])
-    shutil.copyfile(maven_file, destination / 'SOURCES' / 'MavenPro-OFL.txt')
-    sources_list.append(f'Source3: MavenPro-OFL.txt')
-    checks.append(f'{maven["sha256"]}  MavenPro-OFL.txt')
 
     template = (PACKAGE / "gxde-display-manager.spec.in").read_text()
     replacements = {

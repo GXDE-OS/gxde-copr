@@ -1,24 +1,18 @@
 {
-  "version": "1.3.6.gxde6",
-  "release": 4,
+  "version": "1.3.7.gxde1",
+  "release": 1,
   "components": {
     "gxde-display-manager": {
-      "tag": "1.3.6-gxde6",
-      "commit": "6085cdb341b257aebc00aa989ab78c18043b4e04",
-      "url": "https://codeload.github.com/GXDE-OS/gxde-display-manager/tar.gz/6085cdb341b257aebc00aa989ab78c18043b4e04",
-      "sha256": "5515205900f2871457034b7f818557261393f3cb0eddd8db1c856924d6776d21"
+      "tag": "1.3.7-gxde1",
+      "commit": "8522b4e49549075d5c4bf21f2935a9cf446f1b94",
+      "url": "https://codeload.github.com/GXDE-OS/gxde-display-manager/tar.gz/8522b4e49549075d5c4bf21f2935a9cf446f1b94",
+      "sha256": "bcf9deb0d4633c3ed1ed492c0e6ee1523b42f0ef28f17d1297655da89b2e877a"
     },
     "gxdm-emergency-mode": {
       "tag": "1.0.0-gxde2",
       "commit": "d2224674a2efe24028dc671e7eb070a92edb7265",
       "url": "https://codeload.github.com/GXDE-OS/gxdm-emergency-mode/tar.gz/d2224674a2efe24028dc671e7eb070a92edb7265",
       "sha256": "ae48f7473e1cc3eff6eff7ea4da47e72040dca7932586d45379f677a56767a6c"
-    },
-    "MavenPro-OFL": {
-      "tag": "commit:1c21ee500b7b",
-      "commit": "1c21ee500b7b87a4871696519fc84107a1a001df",
-      "url": "https://raw.githubusercontent.com/googlefonts/mavenproFont/1c21ee500b7b87a4871696519fc84107a1a001df/OFL.txt",
-      "sha256": "e0cde1a4993ed689d463d5e2401f4a60c54cc48a14253ab0f8012d722c417038"
     }
   }
 }

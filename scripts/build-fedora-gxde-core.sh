@@ -20,7 +20,7 @@ id builder >/dev/null 2>&1 || useradd --create-home builder
 WAVES=(
     'gxde-artwork gxde-libs gxde-daemon gxde-polkit-agent gxde-installer
      gxde-screensaver gxde-terminal gxde-compressor gxde-launcher
-     gxde-session-ui gxde-app-management'
+     gxde-session-ui gxde-lock gxde-app-management'
     'gxde-dock gxde-control-center'
     'gxde-top-panel gxde-file-manager'
     'gxde-search gxde-wallpaper-chooser'

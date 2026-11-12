@@ -12,8 +12,7 @@ mkdir -p "$stage"
 #   / postlogin / pam_selinux), not Arch's system-login. The spec installs
 #   Fedora-specific PAM files in %install.
 # -DCMAKE_INSTALL_LIBEXECDIR=lib/gxdm: matches AUR, helpers go to /usr/lib/gxdm.
-# LayerShellQtConfig.cmake is in /usr/lib64/cmake/LayerShellQt/; ensure cmake
-# finds it and other system Qt6/KF6 packages.
+# Keep system Qt6/DTK packages discoverable through the standard prefix.
 cmake -S gxde-display-manager -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LIBDIR="${libdir#/usr/}" \

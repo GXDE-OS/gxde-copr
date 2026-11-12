@@ -158,6 +158,12 @@
       "url": "https://codeload.github.com/GXDE-OS/gxde-session-ui/tar.gz/a1c22930a7b1e7328b733f0317862bf5b19409e0",
       "sha256": "b16e3f6d4809604455f9d56ed46b2f2cb52df2fd3d1c0514c325ca10bc67a794"
     },
+    "gxde-lock": {
+      "tag": "2.0.0-gxde3",
+      "commit": "77b96a6eb5f8b94ca02b493eb14feca93a1cf6d3",
+      "url": "https://codeload.github.com/GXDE-OS/gxde-lock/tar.gz/77b96a6eb5f8b94ca02b493eb14feca93a1cf6d3",
+      "sha256": "be8d252334d340ec77e57aa2eed661a2f648df64ac5b1626ec9df7806149d9ad"
+    },
     "gxde-file-manager": {
       "tag": "6.4.20",
       "commit": "05c927ddf026f20384ac16309714827b4e74b7ff",
@@ -357,6 +363,13 @@
         "gxde-session-ui": "a1c22930a7b1e7328b733f0317862bf5b19409e0"
       }
     },
+    "gxde-lock": {
+      "version": "2.0.0.gxde3",
+      "release": 1,
+      "commits": {
+        "gxde-lock": "77b96a6eb5f8b94ca02b493eb14feca93a1cf6d3"
+      }
+    },
     "gxde-file-manager": {
       "version": "6.4.20",
       "release": 1,
@@ -419,7 +432,7 @@
     },
     "gxde-core": {
       "version": "6.1.5",
-      "release": 3,
+      "release": 5,
       "commits": {}
     }
   }

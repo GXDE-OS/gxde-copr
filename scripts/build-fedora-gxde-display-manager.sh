@@ -18,5 +18,5 @@ chown -R builder:builder /work/build/gxdm-rpmbuild
 runuser -u builder -- rpmbuild -ba --define '_topdir /work/build/gxdm-rpmbuild' \
     /work/build/gxdm-rpmbuild/SPECS/gxde-display-manager.spec
 dnf -y install /work/build/gxdm-rpmbuild/RPMS/$(uname -m)/gxde-display-manager-*.rpm
-rpm -V gxde-display-manager gxde-display-manager-devel
+rpm -V gxde-display-manager gxde-display-manager-selinux
 runuser -u builder -- bash scripts/smoke-test-gxde-display-manager.sh
