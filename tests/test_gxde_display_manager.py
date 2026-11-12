@@ -46,7 +46,7 @@ class Prepare(unittest.TestCase):
     def test_lock_has_two_components(self):
         lock = json.loads((gxdm.sources.PACKAGE / 'upstream-lock.json').read_text())
         self.assertEqual(len(lock['components']), 2)
-        self.assertEqual(lock['components']['gxde-display-manager']['tag'], '1.3.7-gxde1')
+        self.assertEqual(lock['components']['gxde-display-manager']['tag'], '1.3.7-gxde2')
         self.assertEqual(lock['components']['gxdm-emergency-mode']['tag'], '1.0.0-gxde2')
 
     def test_prepared_spec_has_fedora_pam_sources(self):

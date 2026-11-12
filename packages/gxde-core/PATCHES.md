@@ -33,6 +33,11 @@
 
 以下调整均通过构建参数或环境变量实现，不修改上游源码：
 
+- **deepin-daemon 4.0.17 标签移动（2026-11-11）**：上游将已经发布的
+  `4.0.17` 从 `9cda7cf89ed6` 强制移动到 `0e3de5673f80`，两者从
+  `a526005843f3` 后分叉。新标签加入 WPA3/SAE 密码保存修复与 Arch 打包，
+  但不再包含旧分支的“重新登录后主题偏好重置”提交。按正式标签策略接受新提交，
+  `gxde-daemon` RPM Release 从 2 升到 3；没有回补旧提交，也**没有新增源码 patch**。
 - **gxde-lock（2026-11-11）**：新增独立 `gxde-lock` 功能包，锁定正式标签
   `2.0.0-gxde3`。上游 `/etc/xdg/autostart/gxde-lock.desktop` 未限定桌面，RPM
   安装阶段增加 `OnlyShowIn=GXDE;Deepin;`；`Deepin` 必须保留，因为 GXDE 的

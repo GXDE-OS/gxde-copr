@@ -1,12 +1,12 @@
 {
-  "version": "6.3.8",
+  "version": "6.3.9",
   "release": 1,
   "components": {
     "dtk2widget-qt6": {
-      "tag": "6.3.8",
-      "commit": "ae84f46a41158edb84aa9c52ab0db434fa99bf5a",
-      "url": "https://codeload.github.com/GXDE-OS/dtk2widget-qt6/tar.gz/ae84f46a41158edb84aa9c52ab0db434fa99bf5a",
-      "sha256": "46e22fa1b691cdf7281c7601b45a427bde665821a45e5311541da4292eda3c80"
+      "tag": "6.3.9",
+      "commit": "83e62a0d286e5ea1a92205ee3c66f601c6d55ab6",
+      "url": "https://codeload.github.com/GXDE-OS/dtk2widget-qt6/tar.gz/83e62a0d286e5ea1a92205ee3c66f601c6d55ab6",
+      "sha256": "52426f57d4331e5e0b64ce3f36d9fcdece0f288c49965c4c52d987a14319778a"
     },
     "gxde-qt6-integration": {
       "tag": "6.0.1-arch1",

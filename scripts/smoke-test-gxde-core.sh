@@ -65,11 +65,13 @@ test -f /usr/share/icons/hicolor/256x256/apps/rofd.png
 test -d /usr/libexec/gxde-daemon
 test -x /usr/libexec/gxde-daemon/dock/gxde-dock-daemon
 
-# Lock file (shipped as %doc by every split group package)
+# Lock file (shipped as %doc by every split group package).  Read it from the
+# mandatory gxde-lock component: unchanged split packages can legitimately
+# retain the lock snapshot from the build that produced their current RPM.
 python3 - <<'PY'
 import json
 from pathlib import Path
-lock = json.loads(Path('/usr/share/doc/gxde-artwork/upstream-lock.json').read_text())
+lock = json.loads(Path('/usr/share/doc/gxde-lock/upstream-lock.json').read_text())
 assert len(lock['components']) == 45, len(lock['components'])
 assert len(lock['groups']) == 19, len(lock['groups'])
 # Branch-pinned modules must record their branch.

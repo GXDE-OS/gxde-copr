@@ -4,7 +4,7 @@
 
 ## `0001-systemd-conflict-with-kmscon-vt.patch`
 
-- 组件/tag：`gxde-display-manager 1.3.7-gxde1`。
+- 组件/tag：`gxde-display-manager 1.3.7-gxde2`。
 - 原因：`kmsconvt@.service` 可通过 systemd 标准的 `autovt@.service` 别名替代
   `getty@.service`，但上游 `gxdm.service` 只与 `getty@tty${SDDM_INITIAL_VT}`
   冲突。启用 kmscon 新型 fbcon 后，两者会同时占用 GXDM 初始 VT，造成 greeter

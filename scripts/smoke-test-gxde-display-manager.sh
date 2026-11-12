@@ -39,6 +39,6 @@ import json
 from pathlib import Path
 lock = json.loads(Path('/usr/share/doc/gxde-display-manager/upstream-lock.json').read_text())
 assert len(lock['components']) == 2
-assert lock['components']['gxde-display-manager']['tag'] == '1.3.7-gxde1'
+assert lock['components']['gxde-display-manager']['tag'] == '1.3.7-gxde2'
 assert lock['components']['gxdm-emergency-mode']['tag'] == '1.0.0-gxde2'
 PY

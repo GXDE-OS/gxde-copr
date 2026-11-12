@@ -1,12 +1,12 @@
 {
-  "version": "1.3.7.gxde1",
+  "version": "1.3.7.gxde2",
   "release": 1,
   "components": {
     "gxde-display-manager": {
-      "tag": "1.3.7-gxde1",
-      "commit": "8522b4e49549075d5c4bf21f2935a9cf446f1b94",
-      "url": "https://codeload.github.com/GXDE-OS/gxde-display-manager/tar.gz/8522b4e49549075d5c4bf21f2935a9cf446f1b94",
-      "sha256": "bcf9deb0d4633c3ed1ed492c0e6ee1523b42f0ef28f17d1297655da89b2e877a"
+      "tag": "1.3.7-gxde2",
+      "commit": "38fb765a9811ed1662c4ac1ba5f95ade82c17063",
+      "url": "https://codeload.github.com/GXDE-OS/gxde-display-manager/tar.gz/38fb765a9811ed1662c4ac1ba5f95ade82c17063",
+      "sha256": "9919dd16b28aba697e29eddf97f43175229c76d85f83e8f4c93ff3c07934abdd"
     },
     "gxdm-emergency-mode": {
       "tag": "1.0.0-gxde2",

@@ -80,12 +80,12 @@
     "sha256": "5e2b9a97b367ef42e1e1be00531a56d84b1862f5d24838cbd5e2e8247bb3a2e8"
   },
   "gxde-editor": {
-    "version": "2.0.10",
-    "release": 3,
-    "tag": "2.0.10",
-    "commit": "83a10eb7698982cabeadcbf80418293968ccf2e1",
-    "url": "https://codeload.github.com/GXDE-OS/gxde-editor/tar.gz/83a10eb7698982cabeadcbf80418293968ccf2e1",
-    "sha256": "6bc3b2733c38c55206f5071b7200e6234a911953278bdbdc49c00a960cce801d"
+    "version": "2.0.11",
+    "release": 1,
+    "tag": "2.0.11",
+    "commit": "3cb0cc50e4c69a38a3258934ab3c95231c19ca2d",
+    "url": "https://codeload.github.com/GXDE-OS/gxde-editor/tar.gz/3cb0cc50e4c69a38a3258934ab3c95231c19ca2d",
+    "sha256": "26f4209345b2a0d4e0677c23a6ad26fcfed3cf43c017d2cac0d8f05ed8090753"
   },
   "gxde-filetransfer": {
     "version": "1.2.1",
