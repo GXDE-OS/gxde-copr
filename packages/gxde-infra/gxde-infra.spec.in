@@ -13,6 +13,7 @@ Source22:       sources.sha256
 Source23:       upstream-lock.json
 Source24:       gxde-k9.tmpfiles.conf
 Patch0:         0001-network-utils-lrelease-path.patch
+Patch1:         0002-locale-helper-fedora-archive.patch
 ExclusiveArch:  x86_64 aarch64
 BuildRequires:  gcc gcc-c++ make cmake ninja-build python3 golang
 BuildRequires:  pkgconf-pkg-config gettext intltool vala gobject-introspection-devel
@@ -41,6 +42,7 @@ BuildRequires:  pkgconfig(libpipewire-0.3) wlr-protocols-devel wayland-protocols
 BuildRequires:  dbus-devel systemd-rpm-macros
 Requires:       gxde-dtk5 gxde-dtk2 gxde-dtk6 gxde-dtk2-qt6
 Requires:       udisks2 xdg-desktop-portal polkit-pkla-compat
+Requires:       glibc-all-langpacks
 Provides:       deepin-desktop-base = %{version}-%{release}
 Provides:       deepin-desktop-schemas = %{version}-%{release}
 Provides:       deepin-api = %{version}-%{release}
@@ -91,6 +93,7 @@ mv treeland-protocols-%{commit13} treeland-protocols
 mv xdg-desktop-portal-gxde-%{commit14} xdg-desktop-portal-gxde
 mv deepin-gettext-tools-%{commit15} deepin-gettext-tools
 %patch -P 0 -p1
+%patch -P 1 -p1
 cp %{SOURCE23} upstream-lock.json
 mkdir licenses
 cp gxde-desktop-base/LICENSE licenses/gxde-desktop-base.LICENSE

@@ -10,6 +10,8 @@ test -e /usr/share/xdg-desktop-portal/portals/gxde.portal
 test -e /usr/share/glib-2.0/schemas/90_deepin-default-gsettings.gschema.override
 test -e /usr/lib/tmpfiles.d/gxde-k9.conf
 rpm -q polkit-pkla-compat >/dev/null
+rpm -q glibc-all-langpacks >/dev/null
+locale -a | grep -Fqx ja_JP.utf8
 # /var/lib/polkit-1 is intentionally not traversable by regular users.  Check
 # the RPM manifest instead of turning a permissions error into a false missing
 # file report.

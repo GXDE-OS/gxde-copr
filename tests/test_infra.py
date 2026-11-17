@@ -63,6 +63,9 @@ class Infra(unittest.TestCase):
             self.assertIn("XDG_CURRENT_DESKTOP=KDE", spec)
             self.assertIn("XDG_CURRENT_DESKTOP=GXDE", spec)
             self.assertIn("*:GXDE:*|*:Deepin:*|*:deepin:*|*:gxde-flakewm:*)", spec)
+            self.assertIn('Patch1:         0002-locale-helper-fedora-archive.patch', spec)
+            self.assertIn('Requires:       glibc-all-langpacks', spec)
+            self.assertIn('%patch -P 1 -p1', spec)
 
 
 if __name__ == '__main__':

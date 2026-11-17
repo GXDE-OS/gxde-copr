@@ -1,6 +1,6 @@
 {
   "version": "2026.11.03",
-  "release": 4,
+  "release": 5,
   "components": {
     "golang-gxde-dev": {
       "tag": "1.0.6",

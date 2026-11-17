@@ -1,6 +1,21 @@
 # GXDE infra 源码补丁登记
 
-当前新增源码补丁：**1 项**。
+当前新增源码补丁：**2 项**。
+
+## 0002-locale-helper-fedora-archive.patch（Release 5）
+
+- 组件/tag：`gxde-api 4.0.6-arch2`，提交 `882473f93b6d`。
+- 原因：上游 LocaleHelper 按 Debian locale 管理方式硬编码读取
+  `/etc/locale.gen` 并调用 `locale-gen`。Fedora 使用 glibc locale archive，默认没有
+  这两个文件/命令，因此即使 `locale -a` 已包含 `ja_JP.utf8`，切换到控制中心给出的
+  `ja_JP.UTF-8` 仍会报 `invalid locale`。
+- 修改：存在 `/etc/locale.gen` 时保留上游流程；否则从 `locale -a` 验证已编译的
+  locale，规范化 `UTF-8`/`utf8` 拼写后比较，并跳过 Fedora 不需要且不存在的
+  `locale-gen`。RPM 同时依赖 `glibc-all-langpacks`，保证控制中心列出的 locale 可用。
+- 范围：通用 Fedora locale archive 适配，不硬编码日语，不改变语言列表。
+- 移除条件：上游正式支持 Fedora/glibc locale archive 后删除。
+
+已在此轮向用户报告。
 
 ## Deepin Qt 平台主题限定到 GXDE 会话（Release 3）
 

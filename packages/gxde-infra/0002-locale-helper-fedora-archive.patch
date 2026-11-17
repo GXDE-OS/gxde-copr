@@ -1,0 +1,81 @@
+diff --git a/gxde-api/locale-helper/ifc.go b/gxde-api/locale-helper/ifc.go
+index c21e6fc..a47dee7 100644
+--- a/gxde-api/locale-helper/ifc.go
++++ b/gxde-api/locale-helper/ifc.go
+@@ -73,12 +73,10 @@ func (h *Helper) generateLocale(sender dbus.Sender, locale string) error {
+ 		return fmt.Errorf("invalid locale: %s", locale)
+ 	}
+ 
+-	// locales version <= 2.13
++	// Debian generates locales from /etc/locale.gen. Fedora ships compiled
++	// locales in the glibc archive and has neither locale.gen nor locale-gen.
++	// IsLocaleValid already verified that the requested locale is available.
+ 	if !dutils.IsFileExist(defaultLocaleGenFile) {
+-		err := h.doGenLocaleWithParam(locale)
+-		if err != nil {
+-			return err
+-		}
+ 		return nil
+ 	}
+ 
+diff --git a/gxde-api/locale-helper/locale_test.go b/gxde-api/locale-helper/locale_test.go
+index 7cfef83..74dedeb 100644
+--- a/gxde-api/locale-helper/locale_test.go
++++ b/gxde-api/locale-helper/locale_test.go
+@@ -72,3 +72,7 @@ func (*testWrapper) TestLocaleFile(c *C.C) {
+ 	c.Check(len(finfo.Infos), C.Equals, 471)
+ 	c.Check(len(finfo.GetEnabledLocales()), C.Equals, 5)
+ }
++
++func (*testWrapper) TestNormalizeLocaleName(c *C.C) {
++	c.Check(normalizeLocaleName("ja_JP.UTF-8"), C.Equals, normalizeLocaleName("ja_JP.utf8"))
++}
+diff --git a/gxde-api/locale-helper/parser.go b/gxde-api/locale-helper/parser.go
+index e9f3311..4e64d0b 100644
+--- a/gxde-api/locale-helper/parser.go
++++ b/gxde-api/locale-helper/parser.go
+@@ -21,6 +21,7 @@ package main
+ 
+ import (
+ 	"io/ioutil"
++	"os/exec"
+ 	"regexp"
+ 	"strings"
+ 	"sync"
+@@ -46,12 +47,35 @@ type localeFileInfo struct {
+ }
+ 
+ func IsLocaleValid(locale string) bool {
++	// Debian exposes the complete locale catalogue through /etc/locale.gen.
++	// Keep that behavior whenever the file exists.
+ 	finfo, err := NewLocaleFileInfo(defaultLocaleGenFile)
++	if err == nil {
++		return finfo.IsLocaleValid(locale)
++	}
++
++	// Fedora stores precompiled locales in the glibc archive and does not ship
++	// /etc/locale.gen or locale-gen. Query libc's public locale interface and
++	// accept spelling differences such as ja_JP.UTF-8 versus ja_JP.utf8.
++	output, err := exec.Command("locale", "-a").Output()
+ 	if err != nil {
+ 		return false
+ 	}
++	wanted := normalizeLocaleName(locale)
++	for _, available := range strings.Fields(string(output)) {
++		if normalizeLocaleName(available) == wanted {
++			return true
++		}
++	}
++	return false
++}
+ 
+-	return finfo.IsLocaleValid(locale)
++func normalizeLocaleName(locale string) string {
++	replacer := strings.NewReplacer(
++		".", "",
++		"-", "",
++	)
++	return strings.ToLower(replacer.Replace(strings.TrimSpace(locale)))
+ }
+ 
+ func NewLocaleFileInfo(file string) (*localeFileInfo, error) {
