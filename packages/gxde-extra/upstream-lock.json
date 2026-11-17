@@ -40,12 +40,12 @@
     "sha256": "87247a221b68df55ffe61596b112de76b2c9f23607ca07725ca109d9f6c55be8"
   },
   "gxde-camera": {
-    "version": "6.5.49",
+    "version": "6.5.50",
     "release": 1,
-    "tag": "6.5.49",
-    "commit": "73b1c51de535c50761568a684b5c436f52d44dce",
-    "url": "https://codeload.github.com/GXDE-OS/deepin-camera/tar.gz/73b1c51de535c50761568a684b5c436f52d44dce",
-    "sha256": "fa0e3ee4be996451d61a65f255d209007aa7d9e08550c09e7507d1d8877ddb6b"
+    "tag": "6.5.50",
+    "commit": "41b06bfad369163393fd9bdfda8d2798ea1ad40f",
+    "url": "https://codeload.github.com/GXDE-OS/deepin-camera/tar.gz/41b06bfad369163393fd9bdfda8d2798ea1ad40f",
+    "sha256": "36eb9b114dd893a67ca130fb75c92dbdef3c5693c1dc47e584393926d389cf7e"
   },
   "gxde-clone": {
     "version": "1.1.3",
@@ -80,12 +80,12 @@
     "sha256": "5e2b9a97b367ef42e1e1be00531a56d84b1862f5d24838cbd5e2e8247bb3a2e8"
   },
   "gxde-editor": {
-    "version": "2.0.11",
+    "version": "2.0.13",
     "release": 1,
-    "tag": "2.0.11",
-    "commit": "3cb0cc50e4c69a38a3258934ab3c95231c19ca2d",
-    "url": "https://codeload.github.com/GXDE-OS/gxde-editor/tar.gz/3cb0cc50e4c69a38a3258934ab3c95231c19ca2d",
-    "sha256": "26f4209345b2a0d4e0677c23a6ad26fcfed3cf43c017d2cac0d8f05ed8090753"
+    "tag": "2.0.13",
+    "commit": "63a9af16ff077df60b20823ae1d79d0c9e4176f5",
+    "url": "https://codeload.github.com/GXDE-OS/gxde-editor/tar.gz/63a9af16ff077df60b20823ae1d79d0c9e4176f5",
+    "sha256": "697317d45c7f728864a7cc53b5e50e91ddd1ed2d6a009a7a2c4a964398cbc2bf"
   },
   "gxde-filetransfer": {
     "version": "1.2.1",

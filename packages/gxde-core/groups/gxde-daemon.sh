@@ -58,4 +58,10 @@ install -Dm644 gxde-daemon/plugins/dock/translations/*.json \
     install -m644 manifests/*.json "$stage/usr/share/gxde-daemon/plugins/" )
 make -C startgxde install DESTDIR="$stage"
 
+# GXDE on Fedora is Wayland-only.  startgxde still installs the historical
+# Deepin X11 session entry, which would make display managers offer a GXDE X11
+# session that this package set does not support.
+rm -f "$stage/usr/share/xsessions/deepin.desktop"
+rmdir --ignore-fail-on-non-empty "$stage/usr/share/xsessions" 2>/dev/null || true
+
 normalize_stage

@@ -33,6 +33,11 @@
 
 以下调整均通过构建参数或环境变量实现，不修改上游源码：
 
+- **移除 GXDE X11 会话入口（2026-11-17）**：`startgxde` 仍安装历史遗留的
+  `/usr/share/xsessions/deepin.desktop`，但 Fedora GXDE 包组只支持 FlakeWM
+  Wayland 会话。`gxde-daemon` 安装阶段删除该 desktop 文件，避免 GXDM、SDDM、
+  GDM 等显示管理器展示一个无法支持的 GXDE X11 会话；不修改上游源码，
+  **没有新增源码 patch**。
 - **deepin-daemon 4.0.17 标签移动（2026-11-11）**：上游将已经发布的
   `4.0.17` 从 `9cda7cf89ed6` 强制移动到 `0e3de5673f80`，两者从
   `a526005843f3` 后分叉。新标签加入 WPA3/SAE 密码保存修复与 Arch 打包，

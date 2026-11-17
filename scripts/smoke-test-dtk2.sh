@@ -23,4 +23,7 @@ int main(int argc, char **argv) {
 CPP
 cmake -S "$root" -B "$root/build"
 cmake --build "$root/build"
-QT_QPA_PLATFORM=offscreen "$root/build/consumer"
+# DTK2's StartupNotificationMonitor unconditionally asks libxcb for a screen;
+# Qt's offscreen/minimal backends therefore dereference a null XCB connection.
+# Compilation/linking is the headless smoke test; runtime is covered inside the
+# real GXDE Wayland session through XWayland.

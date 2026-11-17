@@ -2,9 +2,16 @@
 
 ## 此次 Treeland 支持
 
-- 协议来源：`linuxdeepin/treeland-protocols` 正式 tag `0.7.0`，与 `gxde-infra` 使用相同 commit 和 SHA256。
-- **无新增源码 patch**。协议仅作为构建期源码放入暂存目录，不随 DTK5 RPM 安装。`dtk5gui` 不再设置 `DTK_DISABLE_TREELAND=ON`；构建脚本检查 Treeland 子构建是否成功，以及是否选中暂存的 0.7.0。
+- 协议来源：`linuxdeepin/treeland-protocols` 正式 tag `0.9.1`，与 `gxde-infra` 使用相同 commit 和 SHA256。
+- **无新增源码 patch**。协议仅作为构建期源码放入暂存目录，不随 DTK5 RPM 安装。`dtk5gui` 不再设置 `DTK_DISABLE_TREELAND=ON`；构建脚本检查 Treeland 子构建是否成功，以及是否选中暂存的 0.9.1。
 - 移除条件：若上游 `dtk5gui` 能直接依赖 Fedora 提供的兼容协议包，可去掉本地构建期暂存；当前不能直接使用 Fedora 0.5.x 的不同协议布局。
+
+## COPR Release 序号修正（2026-11-17）
+
+- COPR 中曾有手工迭代产生的 `6.7.43-8`，高于仓库锁文件自动计算出的
+  `6.7.43-6`，导致新协议构建成功却不会升级已安装的 `-8`。
+- 本轮将 Release 提升到 `9`，确保 treeland-protocols 0.9.1 和当前 dwayland
+  打包能覆盖历史 COPR 版本。仅修正 RPM 版本序，**没有新增源码 patch**。
 
 ## 既有构建期源码替换
 

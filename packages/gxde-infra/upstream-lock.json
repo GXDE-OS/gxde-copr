@@ -1,6 +1,6 @@
 {
   "version": "2026.11.03",
-  "release": 3,
+  "release": 4,
   "components": {
     "golang-gxde-dev": {
       "tag": "1.0.6",
@@ -81,10 +81,10 @@
       "sha256": "a95f589d474b5fd9b989fc9a8dd4673678c9508911da2441cb576830094beb46"
     },
     "treeland-protocols": {
-      "tag": "0.9.0",
-      "commit": "578263755cb80b56f2e13fde34da1c294418e608",
-      "url": "https://codeload.github.com/linuxdeepin/treeland-protocols/tar.gz/578263755cb80b56f2e13fde34da1c294418e608",
-      "sha256": "9ea8288214f748904b04e4b343530285d1addb3e2e4d6644211804a3c6148cb5"
+      "tag": "0.9.1",
+      "commit": "5d28a8ac78a6f78f70ed46146159c8e8a06780cf",
+      "url": "https://codeload.github.com/linuxdeepin/treeland-protocols/tar.gz/5d28a8ac78a6f78f70ed46146159c8e8a06780cf",
+      "sha256": "4923fde7647ffbb25c7bdf92bd2d8c1719d8591b193bab84929531ad0eb11e04"
     },
     "xdg-desktop-portal-gxde": {
       "tag": "1.2.5",

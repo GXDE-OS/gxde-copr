@@ -202,11 +202,13 @@ class Prepare(unittest.TestCase):
     def test_tools_and_scriptlets_land_in_right_groups(self):
         with tempfile.TemporaryDirectory() as tmp:
             _, spec = self._prepare('gxde-daemon', tmp)
+            build_sh = (Path(tmp) / 'SOURCES/build.sh').read_text()
             self.assertIn('Source105:      deepin-policy-ts-convert', spec)
             self.assertIn('%post', spec)
             self.assertIn('update-gtk-settings', spec)
             self.assertIn('BuildRequires:  golang', spec)
             self.assertTrue((Path(tmp) / 'SOURCES/deepin-policy-ts-convert').exists())
+            self.assertIn('rm -f "$stage/usr/share/xsessions/deepin.desktop"', build_sh)
         with tempfile.TemporaryDirectory() as tmp:
             _, spec = self._prepare('gxde-session-ui', tmp)
             self.assertIn('Source106:      deepin-desktop-ts-convert', spec)

@@ -35,10 +35,11 @@ test -d /usr/share/wallpapers/deepin
 ls /usr/share/glib-2.0/schemas/*.gschema.xml >/dev/null 2>&1
 ls /usr/share/glib-2.0/schemas/ | grep -q deepin
 
-# Session entry: Arch ground truth is xsessions/deepin.desktop from startgxde.
-# The GXDE Wayland session entry (gxde-flakewm.desktop) ships in the separate
-# flakewm package, not here.
-test -f /usr/share/xsessions/deepin.desktop
+# GXDE is Wayland-only on Fedora.  startgxde upstream still installs the old
+# Deepin X11 entry, but the gxde-daemon package must remove it.  The supported
+# gxde-flakewm.desktop entry ships in the separate flakewm package.
+test ! -e /usr/share/xsessions/deepin.desktop
+test -f /usr/share/wayland-sessions/gxde-flakewm.desktop
 
 # The locker is installed as a core component, but its XDG autostart must be
 # limited to GXDE/startgxde rather than leaking into Plasma or GNOME.

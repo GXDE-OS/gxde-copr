@@ -7,7 +7,7 @@ for executable in flakewm startflakewm; do
 done
 
 # Wayland session
-test -f /usr/share/wayland-sessions/flakewm.desktop
+test -f /usr/share/wayland-sessions/gxde-flakewm.desktop
 
 # Lock file
 python3 - <<'PY'

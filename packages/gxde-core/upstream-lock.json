@@ -49,16 +49,16 @@
       "sha256": "bf1cfa9fa06c3972c1652b0ed6ecdf4d9a3ac67c1a1ee3538bf964e386e61228"
     },
     "deepin-daemon": {
-      "tag": "4.0.17",
-      "commit": "0e3de5673f80764296d6e4f07a321adf73f478db",
-      "url": "https://codeload.github.com/GXDE-OS/deepin-daemon/tar.gz/0e3de5673f80764296d6e4f07a321adf73f478db",
-      "sha256": "3aa09c345322a4739b78cf41c37d00a151a56698857503434cab84722998c0a3"
+      "tag": "4.0.18",
+      "commit": "293d742797c09c6657a7371f4238fc5cbd12bb41",
+      "url": "https://codeload.github.com/GXDE-OS/deepin-daemon/tar.gz/293d742797c09c6657a7371f4238fc5cbd12bb41",
+      "sha256": "20a8ae352f382c19a250873664fe40ce5be97deff57d3c713cf0a5946cb00b38"
     },
     "gxde-daemon": {
-      "tag": "1.3.16",
-      "commit": "5ed00fd06f5e7b4c9c6e327baed6eade04ec2536",
-      "url": "https://codeload.github.com/GXDE-OS/gxde-daemon/tar.gz/5ed00fd06f5e7b4c9c6e327baed6eade04ec2536",
-      "sha256": "8e0960d87cb4ee3c6ce861dc0ea00a3eb997784c4287cde64de203b8c98aaa4b"
+      "tag": "1.3.17",
+      "commit": "9bdf273c57c1baef102bdf185b822907f9cf9c4a",
+      "url": "https://codeload.github.com/GXDE-OS/gxde-daemon/tar.gz/9bdf273c57c1baef102bdf185b822907f9cf9c4a",
+      "sha256": "3d7d9389cbed73f84b3c8bff238da67be3635f740f9121203ca37aa9008f0b8a"
     },
     "startgxde": {
       "tag": "4.0.19",
@@ -116,16 +116,16 @@
       "sha256": "88325c9a19ec09d604c96fcdb2bee4f10dbed440de9a034159c685185b260d4a"
     },
     "gxde-dock": {
-      "tag": "6.0.39-1",
-      "commit": "4e1236d342fd70365a59b5eb8299832a0112583d",
-      "url": "https://codeload.github.com/GXDE-OS/gxde-dock/tar.gz/4e1236d342fd70365a59b5eb8299832a0112583d",
-      "sha256": "0486e62a41e5100e2c2bb24ee69797bc18821f86730a5c0c6e5776938e703f52"
+      "tag": "6.0.42",
+      "commit": "12a3c47a5fc597973940f5ffaa339f26828ee25a",
+      "url": "https://codeload.github.com/GXDE-OS/gxde-dock/tar.gz/12a3c47a5fc597973940f5ffaa339f26828ee25a",
+      "sha256": "1e76c962542e26c047b3f40286ce754638a6ef79fd80bc588cf29c03c22b65a2"
     },
     "gxde-top-panel": {
-      "tag": "2.0.3",
-      "commit": "04b73cb9a6ac05489a28f2b80d12e5625e9aaf56",
-      "url": "https://codeload.github.com/GXDE-OS/gxde-top-panel/tar.gz/04b73cb9a6ac05489a28f2b80d12e5625e9aaf56",
-      "sha256": "2054cd58fb6a473f60364004c37a3deab7fa45f0160bb8bbf2d6e4fb239f3211"
+      "tag": "2.0.4",
+      "commit": "b015bc38c8f6ba094f488f4db5045e7f6cef2fac",
+      "url": "https://codeload.github.com/GXDE-OS/gxde-top-panel/tar.gz/b015bc38c8f6ba094f488f4db5045e7f6cef2fac",
+      "sha256": "7c57bc8608a4240f8d03bbe766765d83718a324a85e140c9ed5deceeeb3f546a"
     },
     "gxde-top-panel-plugins": {
       "tag": "6.1.2",
@@ -135,22 +135,22 @@
       "sha256": "2e1744bed24c2caae90ef8cb4aa59c07793c47bbc54dccb8cf88b5fce91aa2b0"
     },
     "gxde-control-center": {
-      "tag": "6.1.7",
-      "commit": "6eb3f095f8dbc8fb6fb0f0fef0240ffbd3b9dfe0",
-      "url": "https://codeload.github.com/GXDE-OS/gxde-control-center/tar.gz/6eb3f095f8dbc8fb6fb0f0fef0240ffbd3b9dfe0",
-      "sha256": "8e025a288c1224d973b42b2827e6ba9a3ebf8e6da186cc7f5a86a82d48ee6ae6"
+      "tag": "6.1.8",
+      "commit": "91ff3c83b9f425e656aabf3e952834f41ea902f9",
+      "url": "https://codeload.github.com/GXDE-OS/gxde-control-center/tar.gz/91ff3c83b9f425e656aabf3e952834f41ea902f9",
+      "sha256": "b32708eab154f784c1923d271f6c606148811a2fb71122e5b57873419daabab7"
     },
     "gxde-wallpaper-chooser": {
-      "tag": "0.2.6",
-      "commit": "000d39fbf5afd3090783b42bd25f548d1d86a5be",
-      "url": "https://codeload.github.com/GXDE-OS/gxde-wallpaper-chooser/tar.gz/000d39fbf5afd3090783b42bd25f548d1d86a5be",
-      "sha256": "28c76eacd841b4369d30f551a7d502e9f42e9eaff21599df78d3db8f2c6b3fce"
+      "tag": "0.2.8",
+      "commit": "f8bdbd8ecbe9544e8f77cd1ba29b0b39a6aa55ae",
+      "url": "https://codeload.github.com/GXDE-OS/gxde-wallpaper-chooser/tar.gz/f8bdbd8ecbe9544e8f77cd1ba29b0b39a6aa55ae",
+      "sha256": "f5ad7132dd9a8d7dfb9683061199f02f3caa5619da30d0b62244d8d734ce8440"
     },
     "gxde-launcher": {
-      "tag": "6.0.27",
-      "commit": "0658fabf23cb22c7d4531b19f2fb298dee80e044",
-      "url": "https://codeload.github.com/GXDE-OS/gxde-launcher/tar.gz/0658fabf23cb22c7d4531b19f2fb298dee80e044",
-      "sha256": "485917beeeb855525f27820ed3f8104fd49a6022bf20dd2305fbb32a91a15692"
+      "tag": "6.0.28",
+      "commit": "6aa214e5c3830554fa889aa43fb76a9725aea549",
+      "url": "https://codeload.github.com/GXDE-OS/gxde-launcher/tar.gz/6aa214e5c3830554fa889aa43fb76a9725aea549",
+      "sha256": "973a55df262a4265a2d2fd7fe03b489a154883f8defbee1b9760b69a2b18d204"
     },
     "gxde-session-ui": {
       "tag": "5.1.7",
@@ -298,11 +298,11 @@
       }
     },
     "gxde-daemon": {
-      "version": "4.0.17",
-      "release": 3,
+      "version": "4.0.18",
+      "release": 1,
       "commits": {
-        "deepin-daemon": "0e3de5673f80764296d6e4f07a321adf73f478db",
-        "gxde-daemon": "5ed00fd06f5e7b4c9c6e327baed6eade04ec2536",
+        "deepin-daemon": "293d742797c09c6657a7371f4238fc5cbd12bb41",
+        "gxde-daemon": "9bdf273c57c1baef102bdf185b822907f9cf9c4a",
         "startgxde": "ecceef678b028f5775d5cdc5068b8bcc2d8edd58",
         "deepin-menu": "280f6255ab4699368214610111a24ff0df32deb0",
         "gxde-sni-server": "6b24f3d20b08039f193457e7fd2d271b7cfbf884",
@@ -321,39 +321,39 @@
       }
     },
     "gxde-dock": {
-      "version": "6.0.39.1",
+      "version": "6.0.42",
       "release": 1,
       "commits": {
-        "gxde-dock": "4e1236d342fd70365a59b5eb8299832a0112583d"
+        "gxde-dock": "12a3c47a5fc597973940f5ffaa339f26828ee25a"
       }
     },
     "gxde-top-panel": {
-      "version": "2.0.3",
+      "version": "2.0.4",
       "release": 1,
       "commits": {
-        "gxde-top-panel": "04b73cb9a6ac05489a28f2b80d12e5625e9aaf56",
+        "gxde-top-panel": "b015bc38c8f6ba094f488f4db5045e7f6cef2fac",
         "gxde-top-panel-plugins": "8f1209c4bc645a61a4b28cdc334c95a128a6570f"
       }
     },
     "gxde-control-center": {
-      "version": "6.1.7",
+      "version": "6.1.8",
       "release": 1,
       "commits": {
-        "gxde-control-center": "6eb3f095f8dbc8fb6fb0f0fef0240ffbd3b9dfe0"
+        "gxde-control-center": "91ff3c83b9f425e656aabf3e952834f41ea902f9"
       }
     },
     "gxde-wallpaper-chooser": {
-      "version": "0.2.6",
-      "release": 2,
+      "version": "0.2.8",
+      "release": 1,
       "commits": {
-        "gxde-wallpaper-chooser": "000d39fbf5afd3090783b42bd25f548d1d86a5be"
+        "gxde-wallpaper-chooser": "f8bdbd8ecbe9544e8f77cd1ba29b0b39a6aa55ae"
       }
     },
     "gxde-launcher": {
-      "version": "6.0.27",
+      "version": "6.0.28",
       "release": 1,
       "commits": {
-        "gxde-launcher": "0658fabf23cb22c7d4531b19f2fb298dee80e044"
+        "gxde-launcher": "6aa214e5c3830554fa889aa43fb76a9725aea549"
       }
     },
     "gxde-session-ui": {
@@ -431,7 +431,7 @@
       }
     },
     "gxde-core": {
-      "version": "6.1.7",
+      "version": "6.1.8",
       "release": 1,
       "commits": {}
     }

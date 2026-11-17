@@ -10,7 +10,11 @@ test -e /usr/share/xdg-desktop-portal/portals/gxde.portal
 test -e /usr/share/glib-2.0/schemas/90_deepin-default-gsettings.gschema.override
 test -e /usr/lib/tmpfiles.d/gxde-k9.conf
 rpm -q polkit-pkla-compat >/dev/null
-test -f /var/lib/polkit-1/localauthority/10-vendor.d/com.deepin.api.device.pkla
+# /var/lib/polkit-1 is intentionally not traversable by regular users.  Check
+# the RPM manifest instead of turning a permissions error into a false missing
+# file report.
+rpm -ql gxde-infra | grep -Fqx \
+    /var/lib/polkit-1/localauthority/10-vendor.d/com.deepin.api.device.pkla
 python3 - <<'PY'
 import json
 from pathlib import Path
